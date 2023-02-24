@@ -5,8 +5,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.github.nicolapiccolo.arrays.insertionSort.InsertionSorter;
-
 public class InsertionSorterTest {
 	@Test
 	public void nullArray_nothingToSort() {
