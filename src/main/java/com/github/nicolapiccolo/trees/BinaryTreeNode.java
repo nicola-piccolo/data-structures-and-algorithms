@@ -38,6 +38,10 @@ public class BinaryTreeNode {
 		this.leftChild = leftChild;
 	}
 	
+	public void resetLeftChild(){
+		this.leftChild = null;
+	}
+	
 	public BinaryTreeNode getLeftChild(){
 		return this.leftChild;
 	}
@@ -48,6 +52,10 @@ public class BinaryTreeNode {
 	
 	public void setRightChild(BinaryTreeNode rightChild){
 		this.rightChild = rightChild;
+	}
+	
+	public void resetRightChild(){
+		this.rightChild = null;
 	}
 
 	public BinaryTreeNode getRightChild(){

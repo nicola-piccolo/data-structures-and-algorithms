@@ -69,6 +69,18 @@ public class BinaryTreeNodeTest {
 		assertTrue(root.hasLeftChild());
 	}	
 	@Test
+	public void resetLeftChild() {
+		Integer value = 3;
+		BinaryTreeNode parent = null;
+		BinaryTreeNode root = new BinaryTreeNode(value, parent);
+		BinaryTreeNode leftChild = new BinaryTreeNode(value, root);
+		assertFalse(root.hasLeftChild());
+		root.setLeftChild(leftChild);
+		assertTrue(root.hasLeftChild());
+		root.resetLeftChild();
+		assertFalse(root.hasLeftChild());
+	}
+	@Test
 	public void getRightChild() {
 		Integer value = 3;
 		BinaryTreeNode parent = null;
@@ -87,4 +99,16 @@ public class BinaryTreeNodeTest {
 		root.setRightChild(rightChild);
 		assertTrue(root.hasRightChild());
 	}	
+	@Test
+	public void resetRightChild() {
+		Integer value = 3;
+		BinaryTreeNode parent = null;
+		BinaryTreeNode root = new BinaryTreeNode(value, parent);
+		BinaryTreeNode rightChild = new BinaryTreeNode(value, root);
+		assertFalse(root.hasRightChild());
+		root.setRightChild(rightChild);
+		assertTrue(root.hasRightChild());
+		root.resetRightChild();
+		assertFalse(root.hasRightChild());
+	}
 }

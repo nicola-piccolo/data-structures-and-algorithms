@@ -99,4 +99,129 @@ public class TreeHeapTest {
 		assertTrue(values.get(2) == rootValue);
 		assertTrue(values.get(3) == firstLeafValue);
 	}
+	
+	@Test(expected = RuntimeException.class)
+	public void removeRoot_emptyHeap_throwsException() {
+		TreeHeap heap = new TreeHeap();
+		heap.removeRoot();
+	}
+	
+	@Test
+	public void removeRoot_justRoot() {
+		Integer rootValue = 3;
+		TreeHeap heap = new TreeHeap();
+		heap.insert(rootValue);
+		assertTrue(heap.removeRoot() == rootValue);
+	}
+	
+	@Test
+	public void removeRoot_rootAndLeftChild() {
+		Integer rootValue = 3;
+		TreeHeap heap = new TreeHeap();
+		heap.insert(rootValue);
+		Integer firstLeafValue = 2;
+		heap.insert(firstLeafValue);
+		assertTrue(heap.removeRoot() == firstLeafValue);
+		assertTrue(heap.removeRoot() == rootValue);
+	}
+	
+	@Test
+	public void removeRoot_rootAndTwoChildren() {
+		Integer rootValue = 3;
+		TreeHeap heap = new TreeHeap();
+		heap.insert(rootValue);
+		Integer firstLeafValue = 2;
+		heap.insert(firstLeafValue);
+		Integer secondLeafValue = 1;
+		heap.insert(secondLeafValue);
+		assertTrue(heap.removeRoot() == secondLeafValue);
+		assertTrue(heap.removeRoot() == firstLeafValue);
+		assertTrue(heap.removeRoot() == rootValue);
+	}
+	
+	@Test
+	public void removeRoot_rootAndOneGrandchild() {
+		Integer rootValue = 3;
+		TreeHeap heap = new TreeHeap();
+		heap.insert(rootValue);
+		Integer firstLeafValue = 2;
+		heap.insert(firstLeafValue);
+		Integer secondLeafValue = 1;
+		heap.insert(secondLeafValue);
+		Integer firstGrandchildValue = 0;
+		heap.insert(firstGrandchildValue);
+		assertTrue(heap.removeRoot() == firstGrandchildValue);
+		assertTrue(heap.removeRoot() == secondLeafValue);
+		assertTrue(heap.removeRoot() == firstLeafValue);
+		assertTrue(heap.removeRoot() == rootValue);
+	}
+	
+	@Test
+	public void removeRoot_rootAndTwoGrandchildren() {
+		Integer rootValue = 3;
+		TreeHeap heap = new TreeHeap();
+		heap.insert(rootValue);
+		Integer firstLeafValue = 2;
+		heap.insert(firstLeafValue);
+		Integer secondLeafValue = 1;
+		heap.insert(secondLeafValue);
+		Integer firstGrandchildValue = 0;
+		heap.insert(firstGrandchildValue);
+		Integer secondGrandchildValue = -1;
+		heap.insert(secondGrandchildValue);
+		assertTrue(heap.removeRoot() == secondGrandchildValue);
+		assertTrue(heap.removeRoot() == firstGrandchildValue);
+		assertTrue(heap.removeRoot() == secondLeafValue);
+		assertTrue(heap.removeRoot() == firstLeafValue);
+		assertTrue(heap.removeRoot() == rootValue);
+	}
+	
+	@Test
+	public void removeRoot_rootAndThreeGrandchildren() {
+		Integer rootValue = 3;
+		TreeHeap heap = new TreeHeap();
+		heap.insert(rootValue);
+		Integer firstLeafValue = 2;
+		heap.insert(firstLeafValue);
+		Integer secondLeafValue = 1;
+		heap.insert(secondLeafValue);
+		Integer firstGrandchildValue = 0;
+		heap.insert(firstGrandchildValue);
+		Integer secondGrandchildValue = -1;
+		heap.insert(secondGrandchildValue);
+		Integer thirdGrandchildValue = -2;
+		heap.insert(thirdGrandchildValue);
+		assertTrue(heap.removeRoot() == thirdGrandchildValue);
+		assertTrue(heap.removeRoot() == secondGrandchildValue);
+		assertTrue(heap.removeRoot() == firstGrandchildValue);
+		assertTrue(heap.removeRoot() == secondLeafValue);
+		assertTrue(heap.removeRoot() == firstLeafValue);
+		assertTrue(heap.removeRoot() == rootValue);
+	}
+	
+	@Test
+	public void removeRoot_rootAndFourGrandchildren() {
+		Integer rootValue = 3;
+		TreeHeap heap = new TreeHeap();
+		heap.insert(rootValue);
+		Integer firstLeafValue = 2;
+		heap.insert(firstLeafValue);
+		Integer secondLeafValue = 1;
+		heap.insert(secondLeafValue);
+		Integer firstGrandchildValue = 0;
+		heap.insert(firstGrandchildValue);
+		Integer secondGrandchildValue = -1;
+		heap.insert(secondGrandchildValue);
+		Integer thirdGrandchildValue = -2;
+		heap.insert(thirdGrandchildValue);
+		Integer fourthGrandchildValue = -3;
+		heap.insert(fourthGrandchildValue);
+		assertTrue(heap.removeRoot() == fourthGrandchildValue);
+		assertTrue(heap.removeRoot() == thirdGrandchildValue);
+		assertTrue(heap.removeRoot() == secondGrandchildValue);
+		assertTrue(heap.removeRoot() == firstGrandchildValue);
+		assertTrue(heap.removeRoot() == secondLeafValue);
+		assertTrue(heap.removeRoot() == firstLeafValue);
+		assertTrue(heap.removeRoot() == rootValue);
+	}
 }

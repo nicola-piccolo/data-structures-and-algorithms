@@ -9,6 +9,7 @@ import com.github.nicolapiccolo.trees.BinaryTreeNode;
 public class TreeHeap {
 	private BinaryTreeNode root;
 	private BinaryTreeNode nextAvailableParent;
+	private BinaryTreeNode latestLeaf;
 	
 	public List<Integer> visitWith(BinaryTreeIterator iterator){
 		List<Integer> list = new ArrayList<>();
@@ -26,7 +27,7 @@ public class TreeHeap {
 		}
 		BinaryTreeNode newLeaf = this.buildLeafNode(newValue, this.nextAvailableParent);
 		this.insertAsLastLeaf(newLeaf);
-		this.restoreHeapWith(newLeaf);
+		this.restoreHeapBottomUpWith(newLeaf);
 	}
 	
 	private boolean isHeapEmpty() {
@@ -50,6 +51,7 @@ public class TreeHeap {
 		} else {
 			this.appendLeafAsLeftChild(leaf);			
 		}
+		this.latestLeaf = leaf;
 	}
 	
 	private void appendLeafAsRightChild(BinaryTreeNode leaf) {
@@ -82,14 +84,14 @@ public class TreeHeap {
 		this.nextAvailableParent.setLeftChild(leaf);
 	}
 	
-	private void restoreHeapWith(BinaryTreeNode newLeaf) {
+	private void restoreHeapBottomUpWith(BinaryTreeNode newLeaf) {
 		if(newLeaf.isRoot()) {
 			return;
 		}
 		BinaryTreeNode parent = newLeaf.getParent();
 		if(newLeaf.getValue() < parent.getValue()) {
 			this.swap(newLeaf, parent);
-			this.restoreHeapWith(parent);
+			this.restoreHeapBottomUpWith(parent);
 		}
 	}
 	
@@ -97,5 +99,102 @@ public class TreeHeap {
 		Integer leafValue = newLeaf.getValue();
 		newLeaf.setValue(parent.getValue());
 		parent.setValue(leafValue);
+	}
+	
+	public Integer removeRoot() {
+		if(this.root == null) {
+			throw new RuntimeException("Empty tree, cannot remote root");
+		}
+		Integer valueToReturn = this.root.getValue();
+		this.moveLatestLeafToRoot();
+		this.restoreHeapTopDownFrom(this.root);
+		return valueToReturn;
+	}
+	
+	public void moveLatestLeafToRoot() {
+		if(!this.root.hasLeftChild() && !this.root.hasRightChild()) {
+			this.resetHeap();
+			return;
+		}
+		this.swap(this.latestLeaf, this.root);
+		this.removeLatestLeaf();
+	}
+	
+	private void resetHeap() {
+		this.root = null;
+		this.latestLeaf = null;
+		this.nextAvailableParent = null;
+	}
+	
+	private void removeLatestLeaf() {
+		BinaryTreeNode latestLeafParent = this.latestLeaf.getParent();
+		if(latestLeafParent.hasRightChild()) {
+			this.removeLatestLeafAsRightChild();
+		} else {
+			this.removeLatestLeafAsLeftChild();
+		}
+	}
+	
+	private void removeLatestLeafAsRightChild() {
+		this.nextAvailableParent = this.latestLeaf.getParent();
+		this.nextAvailableParent.resetRightChild();		
+		this.latestLeaf = this.nextAvailableParent.getLeftChild();
+	}
+	
+	private void removeLatestLeafAsLeftChild() {
+		this.nextAvailableParent.resetLeftChild();
+		this.latestLeaf = this.findRightmostLeaf();
+	}
+	
+	private BinaryTreeNode findRightmostLeaf() {
+		BinaryTreeNode currentNode = this.latestLeaf.getParent();
+		while(currentNode != this.root && currentNode == currentNode.getParent().getLeftChild()) {
+			currentNode = currentNode.getParent();
+		}
+		if(currentNode != this.root) {
+			currentNode = currentNode.getParent().getLeftChild();
+		}
+		while(currentNode.hasRightChild()) {
+			currentNode = currentNode.getRightChild();
+		}
+		return currentNode;
+	}
+	
+	private void restoreHeapTopDownFrom(BinaryTreeNode currentNode) {
+		if(currentNode==null) {
+			return;
+		}
+		if(this.isLeftChildGreaterThan(currentNode) && this.isRightChildGreaterThan(currentNode)) {
+			return;
+		}
+		BinaryTreeNode child;
+		if(this.shouldSwapWithRightChild(currentNode)) {
+			child = currentNode.getRightChild();
+		} else {
+			child = currentNode.getLeftChild();
+		}
+		this.swap(child, currentNode);
+		this.restoreHeapBottomUpWith(child);
+	}
+	
+	private boolean isLeftChildGreaterThan(BinaryTreeNode currentNode) {
+		if(!currentNode.hasLeftChild()) {
+			return true;
+		}
+		return currentNode.getLeftChild().getValue() >= currentNode.getValue(); 
+	}
+	
+	private boolean isRightChildGreaterThan(BinaryTreeNode currentNode) {
+		if(!currentNode.hasRightChild()) {
+			return true;
+		}
+		return currentNode.getRightChild().getValue() >= currentNode.getValue(); 
+	}
+	
+	private boolean shouldSwapWithRightChild(BinaryTreeNode currentNode) {
+		if(!currentNode.hasRightChild()) {
+			return false;
+		}
+		return currentNode.getRightChild().getValue() < currentNode.getLeftChild().getValue();
 	}
 }
