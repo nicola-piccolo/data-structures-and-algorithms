@@ -124,4 +124,8 @@ public class ArrayHeap {
 		int rightChildValue = this.nodes[rightChildIndex];
 		return leftChildValue < rightChildValue ? leftChildIndex : rightChildIndex;
 	}
+	
+	public Integer size() {
+		return this.nextLatestLeafIndex;
+	}
 }

@@ -236,4 +236,20 @@ public class ArrayHeapTest {
 		assertTrue(heap.removeRoot() == firstLeafValue);
 		assertTrue(heap.removeRoot() == rootValue);
 	}
+	
+	@Test
+	public void size_empty() {
+		Integer capacity = 20;
+		ArrayHeap heap = new ArrayHeap(capacity);
+		assertTrue(heap.size() == 0);
+	}
+	
+	@Test
+	public void size_nonEmpty() {
+		Integer initialValue = 3;
+		Integer capacity = 20;
+		ArrayHeap heap = new ArrayHeap(capacity);
+		heap.insert(initialValue);
+		assertTrue(heap.size() == 1);
+	}
 }
