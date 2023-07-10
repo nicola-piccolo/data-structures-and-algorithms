@@ -1,4 +1,4 @@
-package com.github.nicolapiccolo.maps;
+package com.github.nicolapiccolo.maps.hashtables;
 
 import java.util.ArrayList;
 import java.util.List;

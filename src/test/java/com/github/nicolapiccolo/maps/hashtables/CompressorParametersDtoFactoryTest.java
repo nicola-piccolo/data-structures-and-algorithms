@@ -1,8 +1,11 @@
-package com.github.nicolapiccolo.maps;
+package com.github.nicolapiccolo.maps.hashtables;
 
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
+
+import com.github.nicolapiccolo.maps.hashtables.CompressorParametersDto;
+import com.github.nicolapiccolo.maps.hashtables.CompressorParametersDtoFactory;
 
 public class CompressorParametersDtoFactoryTest {
 

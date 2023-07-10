@@ -1,4 +1,4 @@
-package com.github.nicolapiccolo.maps;
+package com.github.nicolapiccolo.maps.hashtables;
 
 public class HashCode {
 	private static final int NUMBER_OF_BITS_OF_INT = 32;

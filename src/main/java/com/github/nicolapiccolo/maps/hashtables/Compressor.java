@@ -1,4 +1,4 @@
-package com.github.nicolapiccolo.maps;
+package com.github.nicolapiccolo.maps.hashtables;
 
 public class Compressor {
 	public int compress(int numberToCompress, CompressorParametersDto dto) {
