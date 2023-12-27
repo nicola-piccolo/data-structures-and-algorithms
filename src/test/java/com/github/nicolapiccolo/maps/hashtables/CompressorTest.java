@@ -4,9 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.github.nicolapiccolo.maps.hashtables.Compressor;
-import com.github.nicolapiccolo.maps.hashtables.CompressorParametersDto;
-
 public class CompressorTest {
 
 	@Test(expected = RuntimeException.class)

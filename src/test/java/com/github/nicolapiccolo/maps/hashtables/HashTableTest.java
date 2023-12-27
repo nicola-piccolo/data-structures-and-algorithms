@@ -4,8 +4,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-import com.github.nicolapiccolo.maps.hashtables.HashTable;
-
 public class HashTableTest {
 
 	@Test(expected = RuntimeException.class)
