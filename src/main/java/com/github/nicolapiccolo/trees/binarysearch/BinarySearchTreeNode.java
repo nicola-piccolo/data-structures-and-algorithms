@@ -34,6 +34,18 @@ public class BinarySearchTreeNode<V> {
 		return this.parent == null;
 	}
 	
+	public boolean isKeyEqualsTo(Integer key) {
+		return this.payload.getKey() == key;
+	}
+	
+	public boolean isKeyGreaterThan(Integer key) {
+		return this.payload.getKey() > key;
+	}
+	
+	public boolean isKeyLessThan(Integer key) {
+		return this.payload.getKey() < key;
+	}
+	
 	public void setLeftChild(BinarySearchTreeNode<V> leftChild){
 		this.leftChild = leftChild;
 		this.leftChild.setParent(this);

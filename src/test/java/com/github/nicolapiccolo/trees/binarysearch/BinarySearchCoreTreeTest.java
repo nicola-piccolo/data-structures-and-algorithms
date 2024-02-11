@@ -7,17 +7,17 @@ import java.util.Optional;
 
 import org.junit.Test;
 
-public class CoreBinarySearchTreeTest {
+public class BinarySearchCoreTreeTest {
 
 	@Test
 	public void size_emptyTree_zero() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		assertEquals(0, tree.size());
 	}
 
 	@Test
 	public void put_root() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -30,7 +30,7 @@ public class CoreBinarySearchTreeTest {
 
 	@Test
 	public void put_rootAndOverwrite() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -45,7 +45,7 @@ public class CoreBinarySearchTreeTest {
 
 	@Test
 	public void put_rootAndLeftChild() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -61,7 +61,7 @@ public class CoreBinarySearchTreeTest {
 
 	@Test
 	public void put_rootAndRightChild() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -80,7 +80,7 @@ public class CoreBinarySearchTreeTest {
 	
 	@Test
 	public void put_rootAndLeftAndRightChildren() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -104,8 +104,8 @@ public class CoreBinarySearchTreeTest {
 	}
 	
 	@Test
-	public void put_rootAntTwoMoreLevels() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+	public void put_rootAndTwoMoreLevels() {
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -127,14 +127,14 @@ public class CoreBinarySearchTreeTest {
 	
 	@Test
 	public void get_emptyTree_empty() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Optional<String> result = tree.get(3);
 		assertTrue(result.isEmpty());
 	}
 	
 	@Test
 	public void get_validTreeWrongKey() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -150,7 +150,7 @@ public class CoreBinarySearchTreeTest {
 	
 	@Test
 	public void get_validTreeValidKey() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -166,7 +166,7 @@ public class CoreBinarySearchTreeTest {
 	
 	@Test
 	public void get_rootKey() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -182,14 +182,14 @@ public class CoreBinarySearchTreeTest {
 	
 	@Test
 	public void delete_emptyTree() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		tree.delete(3);
 		assertEquals(0, tree.size());
 	}
 
 	@Test
 	public void delete_root() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -200,7 +200,7 @@ public class CoreBinarySearchTreeTest {
 	
 	@Test
 	public void delete_wrongKey() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -211,7 +211,7 @@ public class CoreBinarySearchTreeTest {
 	
 	@Test
 	public void delete_leftChild() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -233,7 +233,7 @@ public class CoreBinarySearchTreeTest {
 
 	@Test
 	public void delete_rightChild() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -255,7 +255,7 @@ public class CoreBinarySearchTreeTest {
 
 	@Test
 	public void delete_rootWithLeftChild() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -272,7 +272,7 @@ public class CoreBinarySearchTreeTest {
 
 	@Test
 	public void delete_rootWithRightChild() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -288,7 +288,7 @@ public class CoreBinarySearchTreeTest {
 	
 	@Test
 	public void delete_rootWithBothChildren() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -310,8 +310,8 @@ public class CoreBinarySearchTreeTest {
 	}
 	
 	@Test
-	public void delete_leafFromRootAntTwoMoreLevels() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+	public void delete_leafFromRootAndTwoMoreLevels() {
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -339,8 +339,8 @@ public class CoreBinarySearchTreeTest {
 	}
 
 	@Test
-	public void delete_leftChildFromRootAntTwoMoreLevels() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+	public void delete_leftChildFromRootAndTwoMoreLevels() {
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -368,8 +368,8 @@ public class CoreBinarySearchTreeTest {
 	}
 
 	@Test
-	public void delete_rightChildFromRootAntTwoMoreLevels() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+	public void delete_rightChildFromRootAndTwoMoreLevels() {
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
@@ -397,8 +397,8 @@ public class CoreBinarySearchTreeTest {
 	}
 
 	@Test
-	public void delete_internalNodeFromRootAntThreeMoreLevels() {
-		CoreBinarySearchTree<String> tree = new CoreBinarySearchTree<String>();
+	public void delete_internalNodeFromRootAndThreeMoreLevels() {
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 44;
 		String value = "value";
 		tree.put(key, value);
