@@ -4,14 +4,14 @@ import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-public class BinarySearchNodeFinderTest {
+public class BinarySearchFindOperatorTest {
 	@Test
 	public void findNodeWith_rootKey_returnsRoot() {
 		Integer key = 44;
 		String value = "value";
 		BinarySearchTreeNodePayload<String> rootPayload = new BinarySearchTreeNodePayload<String>(key, value);
 		BinarySearchTreeNode<String> rootNode = new BinarySearchTreeNode<String>(rootPayload);
-		BinarySearchNodeFinder<String> finder = new BinarySearchNodeFinder<String>(rootNode);
+		BinarySearchFindOperator<String> finder = new BinarySearchFindOperator<String>(rootNode);
 		BinarySearchTreeNode<String> matchingNode = finder.findNodeWith(key);
 		BinarySearchTreeNodePayload<String> matchingNodePayload = matchingNode.getPayload();
 		assertEquals(key, matchingNodePayload.getKey());
@@ -34,7 +34,7 @@ public class BinarySearchNodeFinderTest {
 		BinarySearchTreeNodePayload<String> rightChildPayload = new BinarySearchTreeNodePayload<String>(rightKey, rightValue);
 		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(rightChildPayload);
 		rootNode.setRightChild(rightChild);
-		BinarySearchNodeFinder<String> finder = new BinarySearchNodeFinder<String>(rootNode);
+		BinarySearchFindOperator<String> finder = new BinarySearchFindOperator<String>(rootNode);
 		BinarySearchTreeNode<String> matchingNode = finder.findNodeWith(leftKey);
 		BinarySearchTreeNodePayload<String> matchingNodePayload = matchingNode.getPayload();
 		assertEquals(leftKey, matchingNodePayload.getKey());
@@ -57,7 +57,7 @@ public class BinarySearchNodeFinderTest {
 		BinarySearchTreeNodePayload<String> rightChildPayload = new BinarySearchTreeNodePayload<String>(rightKey, rightValue);
 		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(rightChildPayload);
 		rootNode.setRightChild(rightChild);
-		BinarySearchNodeFinder<String> finder = new BinarySearchNodeFinder<String>(rootNode);
+		BinarySearchFindOperator<String> finder = new BinarySearchFindOperator<String>(rootNode);
 		BinarySearchTreeNode<String> matchingNode = finder.findNodeWith(15);
 		BinarySearchTreeNodePayload<String> matchingNodePayload = matchingNode.getPayload();
 		assertEquals(leftKey, matchingNodePayload.getKey());

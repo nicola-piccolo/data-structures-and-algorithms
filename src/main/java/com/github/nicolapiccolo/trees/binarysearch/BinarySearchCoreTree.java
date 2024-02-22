@@ -30,7 +30,7 @@ public class BinarySearchCoreTree<V> implements BinarySearchTree<V> {
 	}
 
 	private BinarySearchTreeNode<V> getMatchingNodeFor(Integer key){
-		BinarySearchNodeFinder<V> finder = new BinarySearchNodeFinder<V>(this.root.get());
+		BinarySearchFindOperator<V> finder = new BinarySearchFindOperator<V>(this.root.get());
 		BinarySearchTreeNode<V> matchingNode = finder.findNodeWith(key);
 		return matchingNode;
 	}

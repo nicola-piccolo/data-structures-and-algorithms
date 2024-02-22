@@ -1,9 +1,9 @@
 package com.github.nicolapiccolo.trees.binarysearch;
 
-public class BinarySearchNodeFinder<V> {
+public class BinarySearchFindOperator<V> {
 	private BinarySearchTreeNode<V> root;
 	
-	public BinarySearchNodeFinder(BinarySearchTreeNode<V> root) {
+	public BinarySearchFindOperator(BinarySearchTreeNode<V> root) {
 		this.root = root;
 	} 
 	
