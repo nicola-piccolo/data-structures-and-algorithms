@@ -1,21 +1,21 @@
 package com.github.nicolapiccolo.trees.binarysearch;
 
-public class BinarySearchRotateOperator<V> {
+public class BinarySearchRotationLeftToRightOperator<V> {
 
 	public void rotate(BinarySearchTreeNode<V> parentNode) {
-		if(!parentNode.hasChildren()) {
+		if(!this.shouldRotate(parentNode)) {
 			return;
 		}		
 		this.doRotate(parentNode);
+	}
+	
+	private boolean shouldRotate(BinarySearchTreeNode<V> parentNode) {
+		return parentNode.hasChildren() && parentNode.hasLeftChild();
 	}
 
 	private void doRotate(BinarySearchTreeNode<V> parentNode) {
 		if(!parentNode.hasRightChild()) {
 			this.rotateParentAndLeftChild(parentNode);
-			return;
-		}
-		if(!parentNode.hasLeftChild()) {
-			this.rotateParentAndRightChild(parentNode);
 			return;
 		}
 		this.rotateParentWithBothChildren(parentNode);
@@ -49,30 +49,6 @@ public class BinarySearchRotateOperator<V> {
 		if(rightChild.hasRightChild()) {
 			rightChild.setLeftChild(rightChild.getRightChild());
 			rightChild.resetRightChild();
-		}
-	}
-	
-	private void rotateParentAndRightChild(BinarySearchTreeNode<V> parentNode) {
-		this.moveRightChildToLeft(parentNode);
-		this.swapNodesPayloads(parentNode, parentNode.getLeftChild());
-		this.reassignLeftChildChildren(parentNode);
-	}
-	
-	private void moveRightChildToLeft(BinarySearchTreeNode<V> parentNode) {
-		BinarySearchTreeNode<V> newLeftChild = parentNode.getRightChild();
-		parentNode.setLeftChild(newLeftChild);
-		parentNode.resetRightChild();		
-	}
-	
-	private void reassignLeftChildChildren(BinarySearchTreeNode<V> parentNode) {
-		BinarySearchTreeNode<V> leftChild = parentNode.getLeftChild();
-		if(leftChild.hasRightChild()) {
-			parentNode.setRightChild(leftChild.getRightChild());
-			leftChild.resetRightChild();
-		}		
-		if(leftChild.hasLeftChild()) {
-			leftChild.setRightChild(leftChild.getLeftChild());
-			leftChild.resetLeftChild();
 		}
 	}
 	
