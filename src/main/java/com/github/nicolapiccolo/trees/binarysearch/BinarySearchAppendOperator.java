@@ -1,28 +1,38 @@
 package com.github.nicolapiccolo.trees.binarysearch;
 
 public class BinarySearchAppendOperator<V> {
+	private BinarySeachNodesCounter counter;
+	
+	public BinarySearchAppendOperator(BinarySeachNodesCounter counter) {
+		this.counter = counter;
+	}
+	
 	public void append(BinarySearchTreeNode<V> node, Integer key, V value) {
-		if(node.isKeyEqualsTo(key)) {
+		this.updateNodesCountersOnPut(node, key);
+		if(node.getKey().equals(key)) {
 			this.replaceValueIn(node, value);
 		} else {
 			this.addChildNodeTo(node, key, value);
 		}
 	}
 	
+	private void updateNodesCountersOnPut(BinarySearchTreeNode<V> node, Integer key) {
+		boolean isNewKey = !node.getKey().equals(key);
+		boolean isMatchingNodeDeleted = node.isDeleted();
+		this.counter.updateSizeOnPut(isNewKey, isMatchingNodeDeleted);
+	}
+	
 	private void replaceValueIn(BinarySearchTreeNode<V> node, V newValue) {
-		BinarySearchTreeNodePayload<V> oldPayload = node.getPayload();
-		BinarySearchTreeNodePayload<V> newPayload = new BinarySearchTreeNodePayload<V>(oldPayload.getKey(), newValue);
-		node.setPayload(newPayload);
+		node.resetIsDeleted();
+		node.setPayload(newValue);
 	}
 	
 	private void addChildNodeTo(BinarySearchTreeNode<V> parentNode, Integer key, V value) {
-		BinarySearchTreeNodePayload<V> payload = new BinarySearchTreeNodePayload<V>(key, value); 
-		BinarySearchTreeNode<V> leafNode = new BinarySearchTreeNode<V>(payload);
-		if(parentNode.isKeyLessThan(key)) {
+		BinarySearchTreeNode<V> leafNode = new BinarySearchTreeNode<V>(key, value);
+		if(key > parentNode.getKey()) {
 			parentNode.setRightChild(leafNode);
 		} else {
 			parentNode.setLeftChild(leafNode);
 		}
-	}
-	
+	}	
 }

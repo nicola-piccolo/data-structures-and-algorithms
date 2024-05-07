@@ -1,20 +1,29 @@
 package com.github.nicolapiccolo.trees.binarysearch;
 
-import java.util.Iterator;
 import java.util.Optional;
 
 public class BinarySearchCoreTree<V> implements BinarySearchTree<V> {
-	private int size = 0;
+	private BinarySeachNodesCounter counter;
 	private Optional<BinarySearchTreeNode<V>> root = Optional.empty();
+	private Optional<BinarySearchTreePutPostProcessor<V>> putPostProcessor = Optional.empty();
+	private Optional<BinarySearchTreeDeletePostProcessor<V>> deletePostProcessor = Optional.empty();
 
+	public BinarySearchCoreTree() {
+		this.counter = new BinarySeachNodesCounter();
+	}
+	
+	public BinarySearchCoreTree(int deletedNodesPercentage, int deletedNodesCountThreshold) {
+		this.counter = new BinarySeachNodesCounter(deletedNodesPercentage, deletedNodesCountThreshold);
+	}
+	
 	@Override
 	public int size() {
-		return this.size;
+		return this.counter.getSize();
 	}
 
 	@Override
 	public Optional<V> get(Integer key) {
-		if(this.size == 0) {
+		if(this.counter.isEmpty()) {
 			return Optional.empty(); 
 		}
 		return this.doGet(key);
@@ -22,11 +31,10 @@ public class BinarySearchCoreTree<V> implements BinarySearchTree<V> {
 	
 	private Optional<V> doGet(Integer key){
 		BinarySearchTreeNode<V> matchingNode = this.getMatchingNodeFor(key);
-		if(!matchingNode.isKeyEqualsTo(key)) {
+		if(!matchingNode.getKey().equals(key)) {
 			return Optional.empty();
 		}
-		BinarySearchTreeNodePayload<V> payload = matchingNode.getPayload();
-		return Optional.of(payload.getValue());
+		return Optional.of(matchingNode.getPayload());
 	}
 
 	private BinarySearchTreeNode<V> getMatchingNodeFor(Integer key){
@@ -34,70 +42,102 @@ public class BinarySearchCoreTree<V> implements BinarySearchTree<V> {
 		BinarySearchTreeNode<V> matchingNode = finder.findNodeWith(key);
 		return matchingNode;
 	}
+	
+	public void setPutPostProcessor(BinarySearchTreePutPostProcessor<V> processor) {
+		this.putPostProcessor = Optional.of(processor);
+	}
+	
+	public void setDeletePostProcessor(BinarySearchTreeDeletePostProcessor<V> processor) {
+		this.deletePostProcessor = Optional.of(processor);
+	}
 
 	@Override
 	public void put(Integer key, V value) {
-		if(this.size == 0) {
+		if(this.counter.isEmpty()) {
 			this.addRootWith(key, value);
-			return;
+		} else {
+			this.doPut(key, value);
 		}
-		this.doPut(key, value);
+		this.doPutPostProcess(key);
 	}
 	
 	private void addRootWith(Integer key, V value) {
-		BinarySearchTreeNodePayload<V> payload = new BinarySearchTreeNodePayload<V>(key, value);
-		BinarySearchTreeNode<V> rootNode = new BinarySearchTreeNode<V>(payload);
+		BinarySearchTreeNode<V> rootNode = new BinarySearchTreeNode<V>(key, value);
 		this.root = Optional.of(rootNode);
-		this.size = 1;
+		this.counter.initializeSizeToOne();
 	}
 	
 	private void doPut(Integer key, V value) {
 		BinarySearchTreeNode<V> matchingNode = this.getMatchingNodeFor(key);
-		if(!matchingNode.isKeyEqualsTo(key)) {
-			this.size++;
-		}
-		BinarySearchAppendOperator<V> operator = new BinarySearchAppendOperator<V>();
+		BinarySearchAppendOperator<V> operator = new BinarySearchAppendOperator<V>(this.counter);
 		operator.append(matchingNode, key, value);
+	}
+	
+	private void doPutPostProcess(Integer key) {
+		if(!this.putPostProcessor.isEmpty()) {
+			BinarySearchTreePutPostProcessor<V> processor = this.putPostProcessor.get();
+			processor.processWith(key, this.root.get());
+		}
 	}
 
 	@Override
 	public void delete(Integer key) {
-		if(this.size == 0) {
+		if(this.counter.isEmpty()) {
 			return;
 		}
 		BinarySearchTreeNode<V> matchingNode = this.getMatchingNodeFor(key);
-		if(!matchingNode.isKeyEqualsTo(key)) {
+		if(!this.isKeyExistingAndNodeActive(matchingNode, key)) {
 			return;
 		}
-		this.doDelete(matchingNode);
+		if(this.hasOnlyRootNode()) {
+			this.doDeleteRoot();
+		} else {
+			this.doDelete(matchingNode);
+		}
+	}
+	
+	private boolean isKeyExistingAndNodeActive(BinarySearchTreeNode<V> matchingNode, int key) {
+		return !matchingNode.isDeleted() && matchingNode.getKey().equals(key);
+	}
+	
+	private boolean hasOnlyRootNode() {
+		return this.counter.getSize() == 1;
+	}
+	
+	private void doDeleteRoot() {
+		this.root = Optional.empty();
+		this.counter.resetSize();
 	}
 	
 	private void doDelete(BinarySearchTreeNode<V> nodeToDelete){
-		if(nodeToDelete.isRoot()) {
-			this.doDeleteRoot(nodeToDelete);
-		} else {
-			this.doDeleteNonRootNode(nodeToDelete);
-		}
-		this.size--;
-	}
-	
-	private void doDeleteRoot(BinarySearchTreeNode<V> root) {
-		if(this.size == 1) {
-			this.root = Optional.empty();
-		} else {
-			BinarySearchDeleteOperator<V> deleteOperator = new BinarySearchDeleteOperator<V>();
-			BinarySearchTreeNode<V> newRoot = deleteOperator.deleteRoot(root);
-			this.root = Optional.of(newRoot);
-		}
-	}
-	
-	private void doDeleteNonRootNode(BinarySearchTreeNode<V> nodeToDelete) {
-		BinarySearchDeleteOperator<V> deleteOperator = new BinarySearchDeleteOperator<V>();
+		BinarySearchDeleteOperator<V> deleteOperator = new BinarySearchDeleteOperator<V>(this.counter);
 		deleteOperator.delete(nodeToDelete);
+		if(this.shouldRebuildTree()) {
+			this.rebuildTree();
+			this.doDeletePostProcess();
+		}
 	}
 	
-	public Iterator<BinarySearchTreeNodePayload<V>> iterator(){
-		BinarySearchTreeInOrderIteratorBuilder<V> builder = new BinarySearchTreeInOrderIteratorBuilder<V>();
-		return builder.buildFrom(root);
+	private boolean shouldRebuildTree() {
+		return this.counter.hasDeletedNodesCountPassedThreshold() && this.counter.hasDeletedNodesPercentagePassedThreshold();
+	}
+	
+	private void rebuildTree() {
+		BinarySearchTreeDeleteRebuildPostProcessor<V> deletePostProcessor = new BinarySearchTreeDeleteRebuildPostProcessor<V>();
+		deletePostProcessor.processWith(this.root.get());
+		BinarySearchTreeNode<V> newRoot = deletePostProcessor.getNewRoot();
+		this.root = Optional.of(newRoot);
+	}
+	
+	private void doDeletePostProcess() {
+		this.deletePostProcessor.ifPresent(deletePostProcessor -> deletePostProcessor.processWith(this.root.get()));
+	}
+	
+	@Override
+	public void iterateWith(BinarySearchTreeIterator<V> binarySearchTreeIterator){
+		if(this.counter.isEmpty()) {
+			return; 
+		}
+		binarySearchTreeIterator.initializeWith(this.root.get());
 	}
 }

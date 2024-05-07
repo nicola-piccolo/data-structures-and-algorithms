@@ -12,31 +12,44 @@ public class BinarySearchAppendOperatorTest {
 	public void append_existingValue_overwrite() {
 		Integer key = 3;
 		String value = "value";		
-		BinarySearchTreeNodePayload<String> rootPayload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> rootNode = new BinarySearchTreeNode<String>(rootPayload);
+		BinarySearchTreeNode<String> rootNode = new BinarySearchTreeNode<String>(key, value);
 		String anotherValue = "anotherValue";
-		BinarySearchAppendOperator<String> operator = new BinarySearchAppendOperator<String>();
+		BinarySeachNodesCounter counter = new BinarySeachNodesCounter(); 
+		BinarySearchAppendOperator<String> operator = new BinarySearchAppendOperator<String>(counter);
 		operator.append(rootNode, key, anotherValue);
-		BinarySearchTreeNodePayload<String> newRootPayload = rootNode.getPayload();
-		assertEquals(key, newRootPayload.getKey());
-		assertEquals(anotherValue, newRootPayload.getValue());
+		assertEquals(key, rootNode.getKey());
+		assertEquals(anotherValue, rootNode.getPayload());
+	}
+	
+	@Test
+	public void append_deletedValue_overwriteAndRestore() {
+		Integer key = 3;
+		String value = "value";		
+		BinarySearchTreeNode<String> rootNode = new BinarySearchTreeNode<String>(key, value);
+		rootNode.setIsDeleted();
+		String anotherValue = "anotherValue";
+		BinarySeachNodesCounter counter = new BinarySeachNodesCounter(); 
+		BinarySearchAppendOperator<String> operator = new BinarySearchAppendOperator<String>(counter);
+		operator.append(rootNode, key, anotherValue);
+		assertEquals(key, rootNode.getKey());
+		assertEquals(anotherValue, rootNode.getPayload());
+		assertFalse(rootNode.isDeleted());
 	}
 
 	@Test
 	public void append_newValue_addChild() {
 		Integer key = 3;
 		String value = "value";		
-		BinarySearchTreeNodePayload<String> rootPayload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> rootNode = new BinarySearchTreeNode<String>(rootPayload);
+		BinarySearchTreeNode<String> rootNode = new BinarySearchTreeNode<String>(key, value);
 		Integer leftKey = 2;
 		String leftValue = "leftValue";
-		BinarySearchAppendOperator<String> operator = new BinarySearchAppendOperator<String>();
+		BinarySeachNodesCounter counter = new BinarySeachNodesCounter(); 
+		BinarySearchAppendOperator<String> operator = new BinarySearchAppendOperator<String>(counter);
 		operator.append(rootNode, leftKey, leftValue);
 		assertTrue(rootNode.hasLeftChild());
 		assertFalse(rootNode.hasRightChild());
 		BinarySearchTreeNode<String> leftChild = rootNode.getLeftChild();
-		BinarySearchTreeNodePayload<String> leftChildPayload = leftChild.getPayload();
-		assertEquals(leftKey, leftChildPayload.getKey());
-		assertEquals(leftValue, leftChildPayload.getValue());
+		assertEquals(leftKey, leftChild.getKey());
+		assertEquals(leftValue, leftChild.getPayload());
 	}
 }

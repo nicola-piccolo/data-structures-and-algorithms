@@ -7,4 +7,5 @@ public interface BinarySearchTree<V> {
 	Optional<V> get(Integer key);
 	void put(Integer key, V value);
 	void delete(Integer key);
+	void iterateWith(BinarySearchTreeIterator<V> binarySearchTreeIterator);
 }

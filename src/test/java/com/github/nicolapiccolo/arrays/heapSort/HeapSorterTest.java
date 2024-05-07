@@ -1,11 +1,9 @@
-package com.github.nicolapiccolo.arrays.heap.heapSort;
+package com.github.nicolapiccolo.arrays.heapSort;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-
-import com.github.nicolapiccolo.arrays.heapSort.HeapSorter;
 
 public class HeapSorterTest {
 	@Test

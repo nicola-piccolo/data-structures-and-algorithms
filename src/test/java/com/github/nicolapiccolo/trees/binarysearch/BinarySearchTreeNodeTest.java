@@ -10,41 +10,31 @@ public class BinarySearchTreeNodeTest {
 	public void setPayload() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> node = new BinarySearchTreeNode<String>(payload);
-		assertTrue(payload == node.getPayload());
-		Integer newKey = 6;
-		String newValue = "newValue";
-		BinarySearchTreeNodePayload<String> newPayload = new BinarySearchTreeNodePayload<String>(newKey, newValue);
-		node.setPayload(newPayload);
-		assertTrue(newPayload == node.getPayload());
+		BinarySearchTreeNode<String> node = new BinarySearchTreeNode<String>(key, value);
+		assertTrue(value == node.getPayload());
 	}
 	@Test
 	public void getPayload() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> node = new BinarySearchTreeNode<String>(payload);
-		assertTrue(payload == node.getPayload());
+		BinarySearchTreeNode<String> node = new BinarySearchTreeNode<String>(key, value);
+		assertTrue(value == node.getPayload());
 	}	
 	@Test
 	public void isRoot_justRoot_true() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> node = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> node = new BinarySearchTreeNode<String>(key, value);
 		assertTrue(node.isRoot());
 	}
 	@Test
 	public void isRoot_leafNode_false() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		root.setLeftChild(leftChild);
 		assertFalse(leftChild.isRoot());
 	}
@@ -52,12 +42,10 @@ public class BinarySearchTreeNodeTest {
 	public void getParent() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		root.setLeftChild(leftChild);
 		assertTrue(root == leftChild.getParent());
 	}
@@ -65,12 +53,10 @@ public class BinarySearchTreeNodeTest {
 	public void getLeftChild() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		root.setLeftChild(leftChild);
 		assertTrue(leftChild == root.getLeftChild());
 	}
@@ -78,12 +64,10 @@ public class BinarySearchTreeNodeTest {
 	public void hasLeftChild() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		root.setLeftChild(leftChild);
 		assertTrue(root.hasLeftChild());
 	}	
@@ -91,12 +75,10 @@ public class BinarySearchTreeNodeTest {
 	public void resetLeftChild() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		assertFalse(root.hasLeftChild());
 		root.setLeftChild(leftChild);
 		assertTrue(root.hasLeftChild());
@@ -107,12 +89,10 @@ public class BinarySearchTreeNodeTest {
 	public void getRightChild() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		root.setRightChild(rightChild);
 		assertTrue(rightChild == root.getRightChild());
 	}
@@ -120,12 +100,10 @@ public class BinarySearchTreeNodeTest {
 	public void hasRightChild() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		assertFalse(root.hasRightChild());
 		root.setRightChild(rightChild);
 		assertTrue(root.hasRightChild());
@@ -134,12 +112,10 @@ public class BinarySearchTreeNodeTest {
 	public void resetRightChild() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		assertFalse(root.hasRightChild());
 		root.setRightChild(rightChild);
 		assertTrue(root.hasRightChild());
@@ -150,12 +126,10 @@ public class BinarySearchTreeNodeTest {
 	public void hasChildren_leftChild() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> leftChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		root.setLeftChild(leftChild);
 		assertTrue(root.hasChildren());
 	}
@@ -163,14 +137,23 @@ public class BinarySearchTreeNodeTest {
 	public void hasChildren_rightChild() {
 		Integer key = 3;
 		String value = "value";
-		BinarySearchTreeNodePayload<String> payload = new BinarySearchTreeNodePayload<String>(key, value);
-		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(payload);
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
 		Integer leafKey = 6;
 		String leaveValue = "leaveValue";
-		BinarySearchTreeNodePayload<String> leafPayload = new BinarySearchTreeNodePayload<String>(leafKey, leaveValue);
-		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(leafPayload);
+		BinarySearchTreeNode<String> rightChild = new BinarySearchTreeNode<String>(leafKey, leaveValue);
 		assertFalse(root.hasRightChild());
 		root.setRightChild(rightChild);
 		assertTrue(root.hasChildren());
+	}
+	@Test
+	public void isDeleted() {
+		Integer key = 3;
+		String value = "value";
+		BinarySearchTreeNode<String> root = new BinarySearchTreeNode<String>(key, value);
+		assertFalse(root.isDeleted());
+		root.setIsDeleted();
+		assertTrue(root.isDeleted());
+		root.resetIsDeleted();
+		assertFalse(root.isDeleted());
 	}
 }

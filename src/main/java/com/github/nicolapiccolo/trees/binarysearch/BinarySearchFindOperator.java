@@ -8,7 +8,7 @@ public class BinarySearchFindOperator<V> {
 	} 
 	
 	public BinarySearchTreeNode<V> findNodeWith(Integer key){
-		if(this.root.isKeyEqualsTo(key)) {
+		if(this.root.getKey().equals(key)) {
 			return this.root;
 		}
 		return this.doFind(key);
@@ -18,7 +18,7 @@ public class BinarySearchFindOperator<V> {
 		BinarySearchTreeNode<V> currentNode = this.root;
 		while(this.shouldContinueSearch(currentNode, key)) {
 			currentNode = this.getNextNode(currentNode, key);
-			if(currentNode.isKeyEqualsTo(key)) {
+			if(currentNode.getKey().equals(key)) {
 				return currentNode;
 			}
 		}
@@ -26,11 +26,11 @@ public class BinarySearchFindOperator<V> {
 	}
 	
 	private boolean shouldContinueSearch(BinarySearchTreeNode<V> currentNode, Integer key) {
-		return (currentNode.isKeyLessThan(key) && currentNode.hasRightChild()) ||
-				(currentNode.isKeyGreaterThan(key) && currentNode.hasLeftChild());
+		return (key > currentNode.getKey() && currentNode.hasRightChild()) ||
+				(key < currentNode.getKey() && currentNode.hasLeftChild());
 	}
 	
 	private BinarySearchTreeNode<V> getNextNode(BinarySearchTreeNode<V> currentNode, Integer key){
-		return currentNode.isKeyLessThan(key) ? currentNode.getRightChild() : currentNode.getLeftChild();
+		return key > currentNode.getKey() ? currentNode.getRightChild() : currentNode.getLeftChild();
 	}
 }

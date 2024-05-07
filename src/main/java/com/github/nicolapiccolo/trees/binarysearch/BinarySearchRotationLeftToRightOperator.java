@@ -34,10 +34,8 @@ public class BinarySearchRotationLeftToRightOperator<V> {
 	}
 	
 	private void swapNodesPayloads(BinarySearchTreeNode<V> firstNode, BinarySearchTreeNode<V> secondNode) {
-		BinarySearchTreeNodePayload<V> firstNodePayload = firstNode.getPayload();
-		BinarySearchTreeNodePayload<V> secondNodePayload = secondNode.getPayload();
-		firstNode.setPayload(secondNodePayload);
-		secondNode.setPayload(firstNodePayload);
+		BinarySearchSwapNodesOperator<V> operator = new BinarySearchSwapNodesOperator<V>();
+		operator.swap(firstNode, secondNode);
 	}
 	
 	private void reassignRightChildChildren(BinarySearchTreeNode<V> parentNode) {

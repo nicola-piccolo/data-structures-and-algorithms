@@ -1,6 +1,6 @@
 package com.github.nicolapiccolo.trees.binarysearch;
 
-public class BinarySearchDoubleRotationRightToLeftOperator<V> {
+public class BinarySearchDoubleRotationRightToLeftOperator<V> implements BinarySearchDoubleRotationOperator<V> {
 
 	public void rotate(BinarySearchTreeNode<V> parentNode) {
 		if(!this.shouldRotate(parentNode)) {

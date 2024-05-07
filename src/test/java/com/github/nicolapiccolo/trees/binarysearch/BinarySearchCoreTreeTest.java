@@ -1,8 +1,9 @@
 package com.github.nicolapiccolo.trees.binarysearch;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.util.Iterator;
 import java.util.Optional;
 
 import org.junit.Test;
@@ -16,17 +17,37 @@ public class BinarySearchCoreTreeTest {
 	}
 
 	@Test
+	public void iterateWith_emptyTree() {
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
+		assertEquals(0, tree.size());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		assertFalse(iterator.hasNext());
+	}
+
+	@Test
 	public void put_root() {
 		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
 		Integer key = 3;
 		String value = "value";
 		tree.put(key, value);
 		assertEquals(1, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> rootPayload = iterator.next();
-		assertEquals(key, rootPayload.getKey());
-		assertEquals(value, rootPayload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String rootPayload = iterator.next();
+		assertEquals(value, rootPayload);
 	}
+	
+	@Test
+	public void put_rootWithCounter() {
+		int deletedNodesPercentage = 10;
+		int deletedNodesCountThreshold = 10;
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>(deletedNodesPercentage, deletedNodesCountThreshold);
+		Integer key = 3;
+		String value = "value";
+		tree.put(key, value);
+		assertEquals(1, tree.size());
+	}	
 
 	@Test
 	public void put_rootAndOverwrite() {
@@ -37,10 +58,10 @@ public class BinarySearchCoreTreeTest {
 		String anotherValue = "anotherValue";
 		tree.put(key, anotherValue);
 		assertEquals(1, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> rootPayload = iterator.next();
-		assertEquals(key, rootPayload.getKey());
-		assertEquals(anotherValue, rootPayload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String rootPayload = iterator.next();
+		assertEquals(anotherValue, rootPayload);
 	}
 
 	@Test
@@ -53,10 +74,10 @@ public class BinarySearchCoreTreeTest {
 		String leftValue = "leftValue";
 		tree.put(leftKey, leftValue);
 		assertEquals(2, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(leftKey, payload.getKey());
-		assertEquals(leftValue, payload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String nodePayload = iterator.next();
+		assertEquals(leftValue, nodePayload);
 	}
 
 	@Test
@@ -69,13 +90,12 @@ public class BinarySearchCoreTreeTest {
 		String rightValue = "rightValue";
 		tree.put(rightKey, rightValue);
 		assertEquals(2, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(key, payload.getKey());
-		assertEquals(value, payload.getValue());
-		BinarySearchTreeNodePayload<String> rightPayload = iterator.next();
-		assertEquals(rightKey, rightPayload.getKey());
-		assertEquals(rightValue, rightPayload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String nodePayload = iterator.next();
+		assertEquals(value, nodePayload);
+		String rightNodePayload = iterator.next();
+		assertEquals(rightValue, rightNodePayload);
 	}
 	
 	@Test
@@ -91,16 +111,14 @@ public class BinarySearchCoreTreeTest {
 		String rightValue = "rightValue";
 		tree.put(rightKey, rightValue);
 		assertEquals(3, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> leftPayload = iterator.next();
-		assertEquals(leftKey, leftPayload.getKey());
-		assertEquals(leftValue, leftPayload.getValue());		
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(key, payload.getKey());
-		assertEquals(value, payload.getValue());
-		BinarySearchTreeNodePayload<String> rightPayload = iterator.next();
-		assertEquals(rightKey, rightPayload.getKey());
-		assertEquals(rightValue, rightPayload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leftNodePayload = iterator.next();
+		assertEquals(leftValue, leftNodePayload);		
+		String nodePayload = iterator.next();
+		assertEquals(value, nodePayload);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);
 	}
 	
 	@Test
@@ -119,10 +137,21 @@ public class BinarySearchCoreTreeTest {
 		String leafValue = "leafValue";
 		tree.put(leafKey, leafValue);
 		assertEquals(4, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> leafPayload = iterator.next();
-		assertEquals(leafKey, leafPayload.getKey());
-		assertEquals(leafValue, leafPayload.getValue());		
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leafPayload = iterator.next();
+		assertEquals(leafValue, leafPayload);		
+	}
+	
+	@Test
+	public void put_withPostProcessor() {
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
+		MockBinarySearchTreePutPostProcessor postProcessor = new MockBinarySearchTreePutPostProcessor();
+		tree.setPutPostProcessor(postProcessor);
+		Integer key = 3;
+		String value = "value";
+		tree.put(key, value);
+		assertEquals(1, tree.size());
 	}
 	
 	@Test
@@ -222,14 +251,35 @@ public class BinarySearchCoreTreeTest {
 		String rightValue = "rightValue";
 		tree.put(rightKey, rightValue);
 		tree.delete(leftKey);
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(key, payload.getKey());
-		assertEquals(value, payload.getValue());
-		BinarySearchTreeNodePayload<String> rightPayload = iterator.next();
-		assertEquals(rightKey, rightPayload.getKey());
-		assertEquals(rightValue, rightPayload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String payload = iterator.next();
+		assertEquals(value, payload);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);
 	}
+	
+	@Test
+	public void delete_alreadyDeletedLeftChild() {
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>();
+		Integer key = 3;
+		String value = "value";
+		tree.put(key, value);
+		Integer leftKey = 2;
+		String leftValue = "leftValue";
+		tree.put(leftKey, leftValue);
+		Integer rightKey = 5;
+		String rightValue = "rightValue";
+		tree.put(rightKey, rightValue);
+		tree.delete(leftKey);
+		tree.delete(leftKey);
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String payload = iterator.next();
+		assertEquals(value, payload);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);
+	}	
 
 	@Test
 	public void delete_rightChild() {
@@ -244,13 +294,12 @@ public class BinarySearchCoreTreeTest {
 		String rightValue = "rightValue";
 		tree.put(rightKey, rightValue);
 		tree.delete(rightKey);
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> leftPayload = iterator.next();
-		assertEquals(leftKey, leftPayload.getKey());
-		assertEquals(leftValue, leftPayload.getValue());		
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(key, payload.getKey());
-		assertEquals(value, payload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leftPayload = iterator.next();
+		assertEquals(leftValue, leftPayload);
+		String payload = iterator.next();
+		assertEquals(value, payload);
 	}
 
 	@Test
@@ -264,10 +313,10 @@ public class BinarySearchCoreTreeTest {
 		tree.put(leftKey, leftValue);
 		tree.delete(key);
 		assertEquals(1, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(leftKey, payload.getKey());
-		assertEquals(leftValue, payload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String payload = iterator.next();
+		assertEquals(leftValue, payload);
 	}
 
 	@Test
@@ -280,10 +329,10 @@ public class BinarySearchCoreTreeTest {
 		String rightValue = "rightValue";
 		tree.put(rightKey, rightValue);
 		tree.delete(key);
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> rightPayload = iterator.next();
-		assertEquals(rightKey, rightPayload.getKey());
-		assertEquals(rightValue, rightPayload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);
 	}
 	
 	@Test
@@ -300,13 +349,12 @@ public class BinarySearchCoreTreeTest {
 		tree.put(rightKey, rightValue);		
 		tree.delete(key);
 		assertEquals(2, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> leftPayload = iterator.next();
-		assertEquals(leftKey, leftPayload.getKey());
-		assertEquals(leftValue, leftPayload.getValue());
-		BinarySearchTreeNodePayload<String> rightPayload = iterator.next();
-		assertEquals(rightKey, rightPayload.getKey());
-		assertEquals(rightValue, rightPayload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leftPayload = iterator.next();
+		assertEquals(leftValue, leftPayload);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);
 	}
 	
 	@Test
@@ -326,16 +374,14 @@ public class BinarySearchCoreTreeTest {
 		tree.put(leafKey, leafValue);
 		tree.delete(leafKey);
 		assertEquals(3, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> leftPayload = iterator.next();
-		assertEquals(leftKey, leftPayload.getKey());
-		assertEquals(leftValue, leftPayload.getValue());		
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(key, payload.getKey());
-		assertEquals(value, payload.getValue());
-		BinarySearchTreeNodePayload<String> rightPayload = iterator.next();
-		assertEquals(rightKey, rightPayload.getKey());
-		assertEquals(rightValue, rightPayload.getValue());		
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leftPayload = iterator.next();
+		assertEquals(leftValue, leftPayload);
+		String payload = iterator.next();
+		assertEquals(value, payload);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);		
 	}
 
 	@Test
@@ -355,16 +401,14 @@ public class BinarySearchCoreTreeTest {
 		tree.put(leafKey, leafValue);
 		tree.delete(leftKey);
 		assertEquals(3, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> leafPayload = iterator.next();
-		assertEquals(leafKey, leafPayload.getKey());
-		assertEquals(leafValue, leafPayload.getValue());		
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(key, payload.getKey());
-		assertEquals(value, payload.getValue());
-		BinarySearchTreeNodePayload<String> rightPayload = iterator.next();
-		assertEquals(rightKey, rightPayload.getKey());
-		assertEquals(rightValue, rightPayload.getValue());		
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leafPayload = iterator.next();
+		assertEquals(leafValue, leafPayload);
+		String payload = iterator.next();
+		assertEquals(value, payload);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);		
 	}
 
 	@Test
@@ -384,16 +428,14 @@ public class BinarySearchCoreTreeTest {
 		tree.put(leafKey, leafValue);
 		tree.delete(rightKey);
 		assertEquals(3, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> leftPayload = iterator.next();
-		assertEquals(leftKey, leftPayload.getKey());
-		assertEquals(leftValue, leftPayload.getValue());		
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(key, payload.getKey());
-		assertEquals(value, payload.getValue());
-		BinarySearchTreeNodePayload<String> leafPayload = iterator.next();
-		assertEquals(leafKey, leafPayload.getKey());
-		assertEquals(leafValue, leafPayload.getValue());		
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leftPayload = iterator.next();
+		assertEquals(leftValue, leftPayload);
+		String payload = iterator.next();
+		assertEquals(value, payload);
+		String leafPayload = iterator.next();
+		assertEquals(leafValue, leafPayload);		
 	}
 
 	@Test
@@ -416,19 +458,89 @@ public class BinarySearchCoreTreeTest {
 		tree.put(lastLeafKey, lastLeafValue);
 		tree.delete(rightKey);
 		assertEquals(4, tree.size());
-		Iterator<BinarySearchTreeNodePayload<String>> iterator = tree.iterator();
-		BinarySearchTreeNodePayload<String> leftPayload = iterator.next();
-		assertEquals(leftKey, leftPayload.getKey());
-		assertEquals(leftValue, leftPayload.getValue());		
-		BinarySearchTreeNodePayload<String> payload = iterator.next();
-		assertEquals(key, payload.getKey());
-		assertEquals(value, payload.getValue());
-		BinarySearchTreeNodePayload<String> rightInternalPayload = iterator.next();
-		assertEquals(rightInternalKey, rightInternalPayload.getKey());
-		assertEquals(rightInternalValue, rightInternalPayload.getValue());		
-		BinarySearchTreeNodePayload<String> lastLeafPayload = iterator.next();
-		assertEquals(lastLeafKey, lastLeafPayload.getKey());
-		assertEquals(lastLeafValue, lastLeafPayload.getValue());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leftPayload = iterator.next();
+		assertEquals(leftValue, leftPayload);
+		String payload = iterator.next();
+		assertEquals(value, payload);
+		String rightInternalPayload = iterator.next();
+		assertEquals(rightInternalValue, rightInternalPayload);	
+		String lastLeafPayload = iterator.next();
+		assertEquals(lastLeafValue, lastLeafPayload);
 	}
-
+	
+	@Test
+	public void delete_rootWithBothChildrenBeyondThreshold_rebuild() {
+		int deletedNodesPercentage = 10;
+		int deletedNodesCountThreshold = 1;
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>(deletedNodesPercentage, deletedNodesCountThreshold);
+		Integer key = 3;
+		String value = "value";
+		tree.put(key, value);
+		Integer leftKey = 2;
+		String leftValue = "leftValue";
+		tree.put(leftKey, leftValue);
+		Integer rightKey = 5;
+		String rightValue = "rightValue";
+		tree.put(rightKey, rightValue);		
+		tree.delete(key);
+		assertEquals(2, tree.size());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leftPayload = iterator.next();
+		assertEquals(leftValue, leftPayload);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);
+	}
+	
+	@Test
+	public void delete_rootWithBothChildrenBeyondThreshold_noRebuild() {
+		int deletedNodesPercentage = 100;
+		int deletedNodesCountThreshold = 1;
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>(deletedNodesPercentage, deletedNodesCountThreshold);
+		Integer key = 3;
+		String value = "value";
+		tree.put(key, value);
+		Integer leftKey = 2;
+		String leftValue = "leftValue";
+		tree.put(leftKey, leftValue);
+		Integer rightKey = 5;
+		String rightValue = "rightValue";
+		tree.put(rightKey, rightValue);		
+		tree.delete(key);
+		assertEquals(2, tree.size());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leftPayload = iterator.next();
+		assertEquals(leftValue, leftPayload);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);
+	}
+	
+	@Test
+	public void delete_rootWithBothChildrenAndPostProcessor() {
+		MockBinarySearchTreeDeletePostProcessor postProcessor = new MockBinarySearchTreeDeletePostProcessor();
+		int deletedNodesPercentage = 10;
+		int deletedNodesCountThreshold = 1;
+		BinarySearchCoreTree<String> tree = new BinarySearchCoreTree<String>(deletedNodesPercentage, deletedNodesCountThreshold);
+		tree.setDeletePostProcessor(postProcessor);
+		Integer key = 3;
+		String value = "value";
+		tree.put(key, value);
+		Integer leftKey = 2;
+		String leftValue = "leftValue";
+		tree.put(leftKey, leftValue);
+		Integer rightKey = 5;
+		String rightValue = "rightValue";
+		tree.put(rightKey, rightValue);		
+		tree.delete(key);
+		assertEquals(2, tree.size());
+		BinarySearchTreeInOrderIterator<String> iterator = new BinarySearchTreeInOrderIterator<String>();
+		tree.iterateWith(iterator);
+		String leftPayload = iterator.next();
+		assertEquals(leftValue, leftPayload);
+		String rightPayload = iterator.next();
+		assertEquals(rightValue, rightPayload);
+	}
 }

@@ -1,17 +1,37 @@
 package com.github.nicolapiccolo.trees.binarysearch;
 
 public class BinarySearchTreeNode<V> {
-	private BinarySearchTreeNodePayload<V> payload;
+	private Integer key;
+	private V payload;
 	private BinarySearchTreeNode<V> parent;
 	private BinarySearchTreeNode<V> leftChild;
 	private BinarySearchTreeNode<V> rightChild;
+	private boolean isDeleted;
 	
-	public BinarySearchTreeNode(BinarySearchTreeNodePayload<V> payload) {
+	public BinarySearchTreeNode(Integer key, V payload) {
+		this.setKey(key);
 		this.setPayload(payload);
+		this.resetIsDeleted();
 	}
 	
-	public void setPayload(BinarySearchTreeNodePayload<V> payload) {
+	public void setKey(Integer key) {
+		this.key = key;
+	}
+	
+	public void setPayload(V payload) {
 		this.payload = payload;
+	}
+	
+	public void resetIsDeleted() {
+		this.isDeleted = false;
+	}
+	
+	public void setIsDeleted() {
+		this.isDeleted = true;
+	}
+	
+	public boolean isDeleted() {
+		return this.isDeleted;
 	}
 	
 	public void setParent(BinarySearchTreeNode<V> parent) {
@@ -22,7 +42,11 @@ public class BinarySearchTreeNode<V> {
 		this.parent = null;
 	}
 	
-	public BinarySearchTreeNodePayload<V> getPayload() {
+	public Integer getKey() {
+		return this.key;
+	}
+	
+	public V getPayload() {
 		return this.payload;
 	}
 	
@@ -32,18 +56,6 @@ public class BinarySearchTreeNode<V> {
 	
 	public boolean isRoot() {
 		return this.parent == null;
-	}
-	
-	public boolean isKeyEqualsTo(Integer key) {
-		return this.payload.getKey() == key;
-	}
-	
-	public boolean isKeyGreaterThan(Integer key) {
-		return this.payload.getKey() > key;
-	}
-	
-	public boolean isKeyLessThan(Integer key) {
-		return this.payload.getKey() < key;
 	}
 	
 	public void setLeftChild(BinarySearchTreeNode<V> leftChild){
