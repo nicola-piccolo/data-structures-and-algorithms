@@ -1,2 +1,7 @@
 # data-structures-and-algorithms
-Exercises about data structures and algorithms (in Java)
+
+Repository dedicated to exercise a little bit on data structures and algorithms, in Java language.
+
+## Arrays
+
+- Insertion sort for an array of Integer items
