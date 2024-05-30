@@ -5,3 +5,8 @@ Repository dedicated to exercise a little bit on data structures and algorithms,
 ## Arrays
 
 - Insertion sort for an array of Integer items
+- Selection sort for an array of Integer items
+
+## Recursion
+
+- Linear congruential generator
