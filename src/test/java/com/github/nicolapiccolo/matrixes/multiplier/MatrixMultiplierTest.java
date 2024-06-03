@@ -14,17 +14,19 @@ public class MatrixMultiplierTest {
 		MatrixMultiplier multiplier = new MatrixMultiplier();
 		multiplier.multiply(matrix, matrix);
 	}
+
 	@Test(expected = RuntimeException.class)
 	public void multiply_incompatibleDimensions_throwException() {
-		double[][] inputMatrix = { {1,2,3}, {4,5,6} };
+		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
 		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
 		MatrixMultiplier multiplier = new MatrixMultiplier();
 		multiplier.multiply(matrix, matrix);
 	}
+
 	@Test
 	public void getColumnAt_validIndex_returnsColumn() {
-		double[][] firstItems = { {1,2,3}, {4,5,6} };
-		double[][] secondItems = { {1,2}, {3,4}, {5,6} };
+		double[][] firstItems = { { 1, 2, 3 }, { 4, 5, 6 } };
+		double[][] secondItems = { { 1, 2 }, { 3, 4 }, { 5, 6 } };
 		ImmutableMatrix first = new ImmutableMatrix(firstItems);
 		ImmutableMatrix second = new ImmutableMatrix(secondItems);
 		MatrixMultiplier multiplier = new MatrixMultiplier();

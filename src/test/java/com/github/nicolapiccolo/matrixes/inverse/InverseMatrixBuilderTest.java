@@ -9,14 +9,15 @@ import com.github.nicolapiccolo.matrixes.ImmutableMatrix;
 public class InverseMatrixBuilderTest {
 	@Test(expected = RuntimeException.class)
 	public void buildFrom_zeroDeterminantMatrix_throwsException() {
-		double[][] inputMatrix = { {1,1}, {2,2} };
+		double[][] inputMatrix = { { 1, 1 }, { 2, 2 } };
 		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
 		InverseMatrixBuilder builder = new InverseMatrixBuilder();
 		builder.buildFrom(matrix);
 	}
+
 	@Test
 	public void buildFrom_identityMatrix_returnsIdentityMatrix() {
-		double[][] inputMatrix = { {1,0}, {0,1} };
+		double[][] inputMatrix = { { 1, 0 }, { 0, 1 } };
 		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
 		InverseMatrixBuilder builder = new InverseMatrixBuilder();
 		ImmutableMatrix result = builder.buildFrom(matrix);
@@ -26,9 +27,10 @@ public class InverseMatrixBuilderTest {
 		assertTrue(items[1][0] == 0);
 		assertTrue(items[1][1] == 1);
 	}
+
 	@Test
 	public void buildFrom_validMatrix_returnsInverseMatrix() {
-		double[][] inputMatrix = { {1,-1}, {0,2} };
+		double[][] inputMatrix = { { 1, -1 }, { 0, 2 } };
 		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
 		InverseMatrixBuilder builder = new InverseMatrixBuilder();
 		ImmutableMatrix result = builder.buildFrom(matrix);

@@ -14,16 +14,18 @@ public class AugmentedMatrixBuilderTest {
 		AugmentedMatrixBuilder builder = new AugmentedMatrixBuilder();
 		builder.buildFrom(matrix);
 	}
+
 	@Test(expected = RuntimeException.class)
 	public void buildFrom_nonSquareMatrix_throwsException() {
-		double[][] inputMatrix = { {1,2,3}, {4,5,6} };
+		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
 		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
 		AugmentedMatrixBuilder builder = new AugmentedMatrixBuilder();
 		builder.buildFrom(matrix);
 	}
+
 	@Test
 	public void getItems() {
-		double[][] inputMatrix = { {1,2}, {3,4} };
+		double[][] inputMatrix = { { 1, 2 }, { 3, 4 } };
 		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
 		AugmentedMatrixBuilder builder = new AugmentedMatrixBuilder();
 		ImmutableMatrix result = builder.buildFrom(matrix);
