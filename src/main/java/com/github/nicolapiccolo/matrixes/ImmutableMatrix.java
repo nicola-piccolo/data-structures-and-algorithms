@@ -58,6 +58,16 @@ public class ImmutableMatrix {
 		return Math.min(this.rowDimension, this.columnDimension);
 	}
 
+	public double getItemAt(int rowIndex, int columnIndex) {
+		if (rowIndex >= this.rowDimension) {
+			throw new RuntimeException("Row index out of boundary!");
+		}
+		if (columnIndex >= this.columnDimension) {
+			throw new RuntimeException("Column index out of boundary!");
+		}
+		return this.items[rowIndex][columnIndex];
+	}
+
 	public double[] getRowAt(int rowIndex) {
 		if (rowIndex >= this.rowDimension) {
 			throw new RuntimeException("Row index out of boundary!");

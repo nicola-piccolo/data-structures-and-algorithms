@@ -26,6 +26,28 @@ public class ImmutableMatrixTest {
 		assertTrue(2 == matrix.getRank());
 	}
 
+	@Test(expected = RuntimeException.class)
+	public void getItemAt_outOfBoundaryRowIndex_throwException() {
+		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
+		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+		matrix.getItemAt(10, 0);
+	}
+
+	@Test(expected = RuntimeException.class)
+	public void getItemAt_outOfBoundaryColumnIndex_throwException() {
+		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
+		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+		matrix.getItemAt(0, 10);
+	}
+
+	@Test
+	public void getItemAt_validIndexes_returnsItem() {
+		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
+		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+		double item = matrix.getItemAt(0, 0);
+		assertTrue(item == 1);
+	}
+
 	@Test
 	public void getRowAt_validIndex_returnsRow() {
 		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };

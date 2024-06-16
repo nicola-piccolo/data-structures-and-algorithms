@@ -14,28 +14,44 @@ public class AugmentedMatrixBuilder {
 	}
 
 	private ImmutableMatrix doBuildFrom(ImmutableMatrix originalMatrix) {
-		double[][] augmentedMatrix = new double[originalMatrix.getRowDimension()][2
-				* originalMatrix.getColumnDimension()];
+		double[][] augmentedMatrix = this.buildEmptyAugmentedMatrix(originalMatrix.getRowDimension(),
+				originalMatrix.getColumnDimension());
 		this.copyOriginalMatrixInto(augmentedMatrix, originalMatrix);
 		this.createIdentityMatrixInto(augmentedMatrix);
 		return new ImmutableMatrix(augmentedMatrix);
 	}
 
+	private double[][] buildEmptyAugmentedMatrix(int originalRowDimension, int originalColumnDimension) {
+		int augmentedMatrixRowDimension = originalRowDimension;
+		int augmentedMatrixColumnDimension = originalColumnDimension * 2;
+		double[][] augmentedMatrix = new double[augmentedMatrixRowDimension][augmentedMatrixColumnDimension];
+		return augmentedMatrix;
+	}
+
 	private void copyOriginalMatrixInto(double[][] augmentedMatrix, ImmutableMatrix originalMatrix) {
-		double[][] originalItems = originalMatrix.getItems();
 		for (int rowIndex = 0; rowIndex < originalMatrix.getRowDimension(); rowIndex++) {
 			for (int columnIndex = 0; columnIndex < originalMatrix.getRowDimension(); columnIndex++) {
-				augmentedMatrix[rowIndex][columnIndex] = originalItems[rowIndex][columnIndex];
+				augmentedMatrix[rowIndex][columnIndex] = originalMatrix.getItemAt(rowIndex, columnIndex);
 			}
 		}
 	}
 
 	private void createIdentityMatrixInto(double[][] augmentedMatrix) {
 		for (int rowIndex = 0; rowIndex < augmentedMatrix.length; rowIndex++) {
-			for (int columnIndex = augmentedMatrix.length; columnIndex < (2 * augmentedMatrix.length); columnIndex++) {
-				augmentedMatrix[rowIndex][columnIndex] = 0;
-			}
-			augmentedMatrix[rowIndex][augmentedMatrix.length + rowIndex] = 1;
+			this.fillRowRightHalfWithZeroesAt(rowIndex, augmentedMatrix);
+			this.setDiagonalOneAt(rowIndex, augmentedMatrix);
 		}
+	}
+
+	private void fillRowRightHalfWithZeroesAt(int rowIndex, double[][] augmentedMatrix) {
+		int augmentedMatrixColumnsSize = augmentedMatrix.length * 2;
+		for (int columnIndex = augmentedMatrix.length; columnIndex < augmentedMatrixColumnsSize; columnIndex++) {
+			augmentedMatrix[rowIndex][columnIndex] = 0;
+		}
+	}
+
+	private void setDiagonalOneAt(int rowIndex, double[][] augmentedMatrix) {
+		int diagonalOneColumnIndex = augmentedMatrix.length + rowIndex;
+		augmentedMatrix[rowIndex][diagonalOneColumnIndex] = 1;
 	}
 }
