@@ -23,31 +23,32 @@ Lastly, in the left part we will “make room” to our new item by shifting val
 Watch this animation:
 
 ![How insertion sort works](https://upload.wikimedia.org/wikipedia/commons/9/9c/Insertion-sort-example.gif)
+*(Source: Wikipedia)*
 
 As we can see, this sorting algorithm works “*in place*,” because it does not require to create any copy of the original array.
 
 For an array of N elements, the time required by insertion sort is O(N<sup>2</sup>) because, in the worst-case scenario with an already descending ordered array, for each new element moved on the left side of the array, we must shift the remaining items on the right.
 
-Now please take a look to its [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/blob/dev/src/main/java/com/github/nicolapiccolo/arrays/insertionSort/InsertionSorter.java)
+Now please take a look to its [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/blob/dev/src/main/java/com/github/nicolapiccolo/arrays/insertionSort/InsertionSorter.java).
 
 ## Clean code tip #1: Too short or vague variable names
 
-** Examples **
+**Examples**
 
     Integer strl;
     Double temp;
     String errmsg404;
 
 
-** Why is it bad? **
+**Why is it bad?**
 
 If you use a variable or a constant with a cryptic name, it is impossible for another developer (or the future yourself) to understand its meaning and explain why we need it.
 
-** How to fix this? **
+**How to fix this?**
 
 Really simple, just replace the mysterious variable name with a longer and self-explanatory name. Please clean up such horrible names every time you come across them.
 
-** Fixed examples **
+**Fixed examples**
 
     Integer stringLength;
     Double partialCartAmount;
