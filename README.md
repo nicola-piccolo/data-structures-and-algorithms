@@ -11,4 +11,6 @@ Here is a collection of articles about sorting algorithms tailored for arrays:
 
 ## Recursion
 
-- Linear congruential generator
+I wanted to check again the foundations of recursion, and I came up with this interesting topic:
+
+- [Linear congruential generator](/src/main/java/com/github/nicolapiccolo/recursion/linearCongruentialGenerator/LinearCongruentialGenerator.md)

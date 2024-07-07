@@ -23,6 +23,7 @@ Lastly, in the left part we will “make room” to our new item by shifting val
 Watch this animation:
 
 ![How insertion sort works](https://upload.wikimedia.org/wikipedia/commons/9/9c/Insertion-sort-example.gif)
+
 *(Source: Wikipedia)*
 
 As we can see, this sorting algorithm works “*in place*,” because it does not require to create any copy of the original array.

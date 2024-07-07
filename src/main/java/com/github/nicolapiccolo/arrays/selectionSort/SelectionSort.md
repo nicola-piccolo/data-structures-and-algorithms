@@ -13,6 +13,7 @@ Lastly, the first and the smallest items are swapped and the right side of the a
 Let us look at the following animation:
 
 ![How selection sort works](https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif)
+
 *(Source: Wikipedia)*
 
 Selection sort is an *in place* sorting algorithm too, because it does not require any copy of the original array.
