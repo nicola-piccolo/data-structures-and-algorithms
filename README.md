@@ -7,10 +7,19 @@ I have created this repository dedicated to exercise again on data structures an
 Here is a collection of articles about sorting algorithms tailored for arrays:
 
 - [Insertion sort for an array of Integer items](/src/main/java/com/github/nicolapiccolo/arrays/insertionSort/InsertionSort.md)
+
+
 - [Selection sort for an array of Integer items](/src/main/java/com/github/nicolapiccolo/arrays/selectionSort/SelectionSort.md)
+
 
 ## Recursion
 
 I wanted to check again the foundations of recursion, and I came up with this interesting topic:
 
 - [Linear congruential generator](/src/main/java/com/github/nicolapiccolo/recursion/linearCongruentialGenerator/LinearCongruentialGenerator.md)
+
+## Matrixes
+
+I concentrated my attention on two specific operations on matrixes:
+
+- [Matrixes multiplication](/src/main/java/com/github/nicolapiccolo/matrixes/multiplier/MatrixMultiplication.md)
