@@ -23,3 +23,5 @@ I wanted to check again the foundations of recursion, and I came up with this in
 I concentrated my attention on two specific operations on matrixes:
 
 - [Matrixes multiplication](/src/main/java/com/github/nicolapiccolo/matrixes/multiplier/MatrixMultiplication.md)
+
+- [Inverse Matrixes](/src/main/java/com/github/nicolapiccolo/matrixes/inverse/InverseMatrix.md)

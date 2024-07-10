@@ -65,7 +65,7 @@ If a class has a vague name and intent, developers could be tempted to add new m
 
 We should try to find out a more precise name for each class: try harder to look to the class methods and figure out what the class or interface intent is.
 
-**Be careful!** If changing a vague name is difficult because the class is doing too many things, break it down into smaller classes that handle a single responsibility. 
+*Be careful!* If changing a vague name is difficult because the class is doing too many things, break it down into smaller classes that handle a single responsibility. 
 
 After this refactoring, it will be easier to find an accurate name for each class.
 
