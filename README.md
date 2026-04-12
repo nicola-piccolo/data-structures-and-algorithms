@@ -11,6 +11,10 @@ Here is a collection of articles about sorting algorithms tailored for arrays:
 
 - [Selection sort for an array of Integer items](/src/main/java/com/github/nicolapiccolo/arrays/selectionSort/SelectionSort.md)
 
+- [Heap sort for an array of Comparable items](/src/main/java/com/github/nicolapiccolo/arrays/heapSort/HeapSort.md)
+
+- [Array-backed min-heap](/src/main/java/com/github/nicolapiccolo/arrays/heaps/ArrayHeap.md)
+
 
 ## Recursion
 
@@ -25,3 +29,9 @@ I concentrated my attention on two specific operations on matrixes:
 - [Matrixes multiplication](/src/main/java/com/github/nicolapiccolo/matrixes/multiplier/MatrixMultiplication.md)
 
 - [Inverse Matrixes](/src/main/java/com/github/nicolapiccolo/matrixes/inverse/InverseMatrix.md)
+
+## Linked lists
+
+An evergreen topic in computer science are lists; here I have worked on some inplementations:
+
+- [Singly linked list](/src/main/java/com/github/nicolapiccolo/lists/singlyLinked/SinglyLinkedList.md)

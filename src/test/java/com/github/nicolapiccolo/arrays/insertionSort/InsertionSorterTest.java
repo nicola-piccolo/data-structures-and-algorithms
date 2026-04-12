@@ -72,4 +72,12 @@ public class InsertionSorterTest {
 		sorter.sort(arrayToSort);
 		assertArrayEquals(arrayToSort, new Integer[] { firstElement, secondElement, thirdElement });
 	}
+
+	@Test
+	public void stringArray_sort() {
+		String[] arrayToSort = new String[] { "cherry", "apple", "banana" };
+		InsertionSorter sorter = new InsertionSorter();
+		sorter.sort(arrayToSort);
+		assertArrayEquals(arrayToSort, new String[] { "apple", "banana", "cherry" });
+	}
 }

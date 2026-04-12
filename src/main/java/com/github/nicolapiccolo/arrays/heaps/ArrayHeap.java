@@ -1,17 +1,18 @@
 package com.github.nicolapiccolo.arrays.heaps;
 
-public class ArrayHeap {
-	private Integer[] nodes;
+public class ArrayHeap<T extends Comparable<T>> {
+	private T[] nodes;
 	private int nextLatestLeafIndex;
 	
+	@SuppressWarnings("unchecked")
 	public ArrayHeap(int capacity) {
-		this.nodes = new Integer[capacity];
+		this.nodes = (T[]) new Comparable[capacity];
 		this.nextLatestLeafIndex = 0;
 	}
 	
-	public void insert(Integer newValue) {
+	public void insert(T newValue) {
 		if(this.isMaxCapacityReached()) {
-			throw new RuntimeException("Max capacity reached");
+			throw new IllegalStateException("Max capacity reached");
 		}
 		this.insertAsLastLeaf(newValue);
 		this.restoreHeapBottomUp();
@@ -21,7 +22,7 @@ public class ArrayHeap {
 		return this.nextLatestLeafIndex == this.nodes.length;
 	}
 	
-	private void insertAsLastLeaf(Integer newValue) {
+	private void insertAsLastLeaf(T newValue) {
 		this.nodes[this.nextLatestLeafIndex] = newValue;
 		this.nextLatestLeafIndex++;
 	}
@@ -43,31 +44,32 @@ public class ArrayHeap {
 	}
 	
 	private boolean shouldSwapNodes(int parentNodeIndex, int currentNodeIndex) {
-		return this.nodes[parentNodeIndex] > this.nodes[currentNodeIndex];
+		return this.nodes[parentNodeIndex].compareTo(this.nodes[currentNodeIndex]) > 0;
 	}
 	
 	private void swapNodes(int parentNodeIndex, int currentNodeIndex) {
-		Integer nodeToSwap = this.nodes[parentNodeIndex];
+		T nodeToSwap = this.nodes[parentNodeIndex];
 		this.nodes[parentNodeIndex] = this.nodes[currentNodeIndex];
 		this.nodes[currentNodeIndex] = nodeToSwap;
 	}
 	
-	public Integer[] getNodes() {
-		Integer[] nodesToReturn = new Integer[this.nextLatestLeafIndex];
+	@SuppressWarnings("unchecked")
+	public T[] getNodes() {
+		T[] nodesToReturn = (T[]) new Comparable[this.nextLatestLeafIndex];
 		for(int index=0; index<this.nextLatestLeafIndex; index++) {
 			nodesToReturn[index] = this.nodes[index];
 		}
 		return nodesToReturn;
 	}
 	
-	public Integer removeRoot() {
+	public T removeRoot() {
 		if(!this.hasNodes()) {
-			throw new RuntimeException("No nodes available");
+			throw new IllegalStateException("No nodes available");
 		}
 		if(this.hasOnlyRoot()) {
 			return this.doRemoveRoot();
 		}
-		Integer rootNodeValue = this.doRemoveRoot();
+		T rootNodeValue = this.doRemoveRoot();
 		this.moveLatestLeafToRoot();
 		this.restoreHeapTopDown();
 		return rootNodeValue;
@@ -81,13 +83,16 @@ public class ArrayHeap {
 		return this.nextLatestLeafIndex == 1;
 	}
 	
-	private Integer doRemoveRoot() {
+	private T doRemoveRoot() {
+		T rootValue = this.nodes[0];
 		this.nextLatestLeafIndex--;
-		return this.nodes[0];
+		this.nodes[0] = null;
+		return rootValue;
 	}
 	
 	private void moveLatestLeafToRoot() {
 		this.nodes[0] = this.nodes[this.nextLatestLeafIndex];
+		this.nodes[this.nextLatestLeafIndex] = null;
 	}
 	
 	private void restoreHeapTopDown() {
@@ -106,26 +111,27 @@ public class ArrayHeap {
 	private boolean isCurrentNodeGreaterThanChildren(int currentNodeIndex) {
 		int leftChildIndex = 2 * currentNodeIndex + 1;
 		int rightChildIndex = 2 * currentNodeIndex + 2;
-		int currentNodeValue = this.nodes[currentNodeIndex];
-		return this.isValueGreaterThan(leftChildIndex, currentNodeValue) || this.isValueGreaterThan(rightChildIndex, currentNodeValue);
+		T currentNodeValue = this.nodes[currentNodeIndex];
+		return this.isChildSmallerOrEqualTo(leftChildIndex, currentNodeValue) || this.isChildSmallerOrEqualTo(rightChildIndex, currentNodeValue);
 	}
 	
-	private boolean isValueGreaterThan(int childIndex, int value) {
+	private boolean isChildSmallerOrEqualTo(int childIndex, T value) {
 		if(childIndex >= this.nextLatestLeafIndex) {
 			return false;
 		}
-		return this.nodes[childIndex] <= value;
+		return this.nodes[childIndex].compareTo(value) <= 0;
 	}
 	
 	private int getChildToSwapIndex(int currentNodeIndex) {
 		int leftChildIndex = 2 * currentNodeIndex + 1;
-		int leftChildValue = this.nodes[leftChildIndex];
 		int rightChildIndex = 2 * currentNodeIndex + 2;
-		int rightChildValue = this.nodes[rightChildIndex];
-		return leftChildValue < rightChildValue ? leftChildIndex : rightChildIndex;
+		if(rightChildIndex >= this.nextLatestLeafIndex) {
+			return leftChildIndex;
+		}
+		return this.nodes[leftChildIndex].compareTo(this.nodes[rightChildIndex]) <= 0 ? leftChildIndex : rightChildIndex;
 	}
 	
-	public Integer size() {
+	public int size() {
 		return this.nextLatestLeafIndex;
 	}
 }

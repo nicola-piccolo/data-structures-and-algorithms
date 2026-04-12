@@ -32,7 +32,7 @@ Given a matrix A with N rows and N columns, the algorithm starts with building a
 
 *(Source: semath.info)*
 
-Here is the Java class that builds the augmented matrix:[Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/blob/dev/src/main/java/com/github/nicolapiccolo/matrixes/inverse/AugmentedMatrixBuilder.java)
+Here is the Java class that builds the augmented matrix: [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/blob/dev/src/main/java/com/github/nicolapiccolo/matrixes/inverse/AugmentedMatrixBuilder.java)
 
 The algorithm now will try to get the identity matrix I on the left part of this augmented matrix and, while doing this, the inverse matrix of A will appear on the right.
 
@@ -45,6 +45,8 @@ Now, the algorithm will perform several steps but the only allowed operations ar
 Please note that these operations must be applied to the whole row, not just one half.
 
 Since we have three nested loops that are processing all the N rows, the overall time complexity is going to be O(N<sup>3</sup>).
+
+Here is the Java class for inverting a matrix: [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/blob/dev/src/main/java/com/github/nicolapiccolo/matrixes/inverse/InverseMatrixBuilder.java)
 
 ## Clean code tip #5: Public method names that expose their implementation details
 

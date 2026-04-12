@@ -1,42 +1,42 @@
 package com.github.nicolapiccolo.arrays.insertionSort;
 
 public class InsertionSorter {
-	public void sort(Integer[] arrayToSort) {
+	public <T extends Comparable<T>> void sort(T[] arrayToSort) {
 		if (arrayToSort == null || arrayToSort.length < 2) {
 			return;
 		}
-		this.doSort(arrayToSort);
+		doSort(arrayToSort);
 	}
 
-	private void doSort(Integer[] arrayToSort) {
+	private <T extends Comparable<T>> void doSort(T[] arrayToSort) {
 		for (int index = 1; index < arrayToSort.length; index++) {
-			this.sortSubarrayUntil(index, arrayToSort);
+			sortSubarrayUntil(index, arrayToSort);
 		}
 	}
 
-	private void sortSubarrayUntil(int index, Integer[] arrayToSort) {
-		Integer newItemToInsert = arrayToSort[index];
+	private <T extends Comparable<T>> void sortSubarrayUntil(int index, T[] arrayToSort) {
+		T newItemToInsert = arrayToSort[index];
 		int cursorMovingToLeft = index - 1;
-		while (this.shouldShiftToRight(arrayToSort, cursorMovingToLeft, newItemToInsert)) {
-			this.shiftToRight(arrayToSort, cursorMovingToLeft);
+		while (shouldShiftToRight(arrayToSort, cursorMovingToLeft, newItemToInsert)) {
+			shiftToRight(arrayToSort, cursorMovingToLeft);
 			cursorMovingToLeft--;
 		}
-		this.insertNewItem(arrayToSort, cursorMovingToLeft, newItemToInsert);
+		insertNewItem(arrayToSort, cursorMovingToLeft, newItemToInsert);
 	}
 
-	private boolean shouldShiftToRight(Integer[] arrayToSort, int cursorMovingToLeft, Integer newItemToInsert) {
+	private <T extends Comparable<T>> boolean shouldShiftToRight(T[] arrayToSort, int cursorMovingToLeft, T newItemToInsert) {
 		if (cursorMovingToLeft < 0) {
 			return false;
 		}
-		Integer itemAtCursor = arrayToSort[cursorMovingToLeft];
+		T itemAtCursor = arrayToSort[cursorMovingToLeft];
 		return itemAtCursor.compareTo(newItemToInsert) > 0;
 	}
 
-	private void shiftToRight(Integer[] arrayToSort, int cursorMovingToLeft) {
+	private <T> void shiftToRight(T[] arrayToSort, int cursorMovingToLeft) {
 		arrayToSort[cursorMovingToLeft + 1] = arrayToSort[cursorMovingToLeft];
 	}
 
-	private void insertNewItem(Integer[] arrayToSort, int cursorMovingToLeft, Integer newItemToInsert) {
+	private <T> void insertNewItem(T[] arrayToSort, int cursorMovingToLeft, T newItemToInsert) {
 		arrayToSort[cursorMovingToLeft + 1] = newItemToInsert;
 	}
 }
