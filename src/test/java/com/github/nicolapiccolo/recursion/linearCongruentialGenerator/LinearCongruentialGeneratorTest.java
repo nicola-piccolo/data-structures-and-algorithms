@@ -33,12 +33,7 @@ public class LinearCongruentialGeneratorTest {
 	}
 
 	private LinearCongruentialGeneratorParameters buildDtoFrom(int multiplier, int increment, int modulus, int seed) {
-		LinearCongruentialGeneratorParameters parameters = new LinearCongruentialGeneratorParameters();
-		parameters.multiplier = multiplier;
-		parameters.increment = increment;
-		parameters.modulus = modulus;
-		parameters.seed = seed;
-		return parameters;
+		return new LinearCongruentialGeneratorParameters(modulus, multiplier, increment, seed);
 	}
 
 	@Test
