@@ -1,9 +1,11 @@
 package com.github.nicolapiccolo.stacks;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class StackTest {
 
@@ -19,14 +21,18 @@ public class StackTest {
 		assertTrue(stack.size() == 0);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void constructor_zeroCapacity_throwsException() {
-		new Stack<Integer>(0);
+		assertThrows(RuntimeException.class, () -> {
+			new Stack<Integer>(0);
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void constructor_negativeCapacity_throwsException() {
-		new Stack<Integer>(-1);
+		assertThrows(RuntimeException.class, () -> {
+			new Stack<Integer>(-1);
+		});
 	}
 
 	@Test
@@ -54,10 +60,12 @@ public class StackTest {
 		assertTrue(stack.size() == 3);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void pop_emptyStack_throwsException() {
-		Stack<Integer> stack = new Stack<>();
-		stack.pop();
+		assertThrows(RuntimeException.class, () -> {
+			Stack<Integer> stack = new Stack<>();
+			stack.pop();
+		});
 	}
 
 	@Test
@@ -93,10 +101,12 @@ public class StackTest {
 		assertTrue(stack.isEmpty());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void peek_emptyStack_throwsException() {
-		Stack<Integer> stack = new Stack<>();
-		stack.peek();
+		assertThrows(RuntimeException.class, () -> {
+			Stack<Integer> stack = new Stack<>();
+			stack.peek();
+		});
 	}
 
 	@Test

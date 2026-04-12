@@ -1,18 +1,22 @@
 package com.github.nicolapiccolo.matrixes.inverse;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 import com.github.nicolapiccolo.matrixes.ImmutableMatrix;
 
 public class InverseMatrixBuilderTest {
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void buildFrom_zeroDeterminantMatrix_throwsException() {
-		double[][] inputMatrix = { { 1, 1 }, { 2, 2 } };
-		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
-		InverseMatrixBuilder builder = new InverseMatrixBuilder();
-		builder.buildFrom(matrix);
+		assertThrows(RuntimeException.class, () -> {
+			double[][] inputMatrix = { { 1, 1 }, { 2, 2 } };
+			ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+			InverseMatrixBuilder builder = new InverseMatrixBuilder();
+			builder.buildFrom(matrix);
+		});
 	}
 
 	@Test

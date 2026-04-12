@@ -1,15 +1,19 @@
 package com.github.nicolapiccolo.maps.hashtables;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class HashTableTest {
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void put_nullKey_throwsException() {
-		HashTable<String, Integer> hashTable = new HashTable<String, Integer>();
-		hashTable.put(null, null);
+		assertThrows(RuntimeException.class, () -> {
+			HashTable<String, Integer> hashTable = new HashTable<String, Integer>();
+			hashTable.put(null, null);
+		});
 	}
 	
 	@Test
@@ -66,10 +70,12 @@ public class HashTableTest {
 		assertTrue(counter > 2);
 	}
 	
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void get_nullKey_throwsException() {
-		HashTable<String, Integer> hashTable = new HashTable<String, Integer>();
-		hashTable.get(null);
+		assertThrows(RuntimeException.class, () -> {
+			HashTable<String, Integer> hashTable = new HashTable<String, Integer>();
+			hashTable.get(null);
+		});
 	}
 	
 	@Test
@@ -88,10 +94,12 @@ public class HashTableTest {
 		assertTrue(hashTable.get("b") == null);
 	}
 	
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void delete_nullKey_throwsException() {
-		HashTable<String, Integer> hashTable = new HashTable<String, Integer>();
-		hashTable.delete(null);
+		assertThrows(RuntimeException.class, () -> {
+			HashTable<String, Integer> hashTable = new HashTable<String, Integer>();
+			hashTable.delete(null);
+		});
 	}
 
 	@Test

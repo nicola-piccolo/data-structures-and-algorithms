@@ -1,10 +1,10 @@
 package com.github.nicolapiccolo.lists;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Optional;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import com.github.nicolapiccolo.lists.singlyLinked.SinglyLinkedHeadAndTailDto;
 import com.github.nicolapiccolo.lists.singlyLinked.SinglyLinkedListNode;

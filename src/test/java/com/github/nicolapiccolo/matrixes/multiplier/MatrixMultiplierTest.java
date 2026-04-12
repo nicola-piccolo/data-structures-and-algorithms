@@ -1,26 +1,32 @@
 package com.github.nicolapiccolo.matrixes.multiplier;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 import com.github.nicolapiccolo.matrixes.ImmutableMatrix;
 
 public class MatrixMultiplierTest {
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void multiply_zeroRank_throwException() {
-		double[][] inputMatrix = { {} };
-		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
-		MatrixMultiplier multiplier = new MatrixMultiplier();
-		multiplier.multiply(matrix, matrix);
+		assertThrows(RuntimeException.class, () -> {
+			double[][] inputMatrix = { {} };
+			ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+			MatrixMultiplier multiplier = new MatrixMultiplier();
+			multiplier.multiply(matrix, matrix);
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void multiply_incompatibleDimensions_throwException() {
-		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
-		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
-		MatrixMultiplier multiplier = new MatrixMultiplier();
-		multiplier.multiply(matrix, matrix);
+		assertThrows(RuntimeException.class, () -> {
+			double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
+			ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+			MatrixMultiplier multiplier = new MatrixMultiplier();
+			multiplier.multiply(matrix, matrix);
+		});
 	}
 
 	@Test

@@ -1,11 +1,13 @@
 package com.github.nicolapiccolo.lists;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 import com.github.nicolapiccolo.lists.singlyLinked.SinglyLinkedList;
 
@@ -83,20 +85,24 @@ public class SinglyLinkedListTest {
 		assertFalse(iterator.hasNext());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void addAt_negativePosition_throwsException() {
-		SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
-		Integer position = -1;
-		Integer value = 10;
-		list.addAt(position, value);
+		assertThrows(RuntimeException.class, () -> {
+			SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+			Integer position = -1;
+			Integer value = 10;
+			list.addAt(position, value);
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void addAt_outOfBoundPosition_throwsException() {
-		SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
-		Integer position = 10;
-		Integer value = 10;
-		list.addAt(position, value);
+		assertThrows(RuntimeException.class, () -> {
+			SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+			Integer position = 10;
+			Integer value = 10;
+			list.addAt(position, value);
+		});
 	}
 
 	@Test
@@ -156,10 +162,12 @@ public class SinglyLinkedListTest {
 		assertFalse(iterator.hasNext());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void first_emptyList_throwsException() {
-		SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
-		list.first();
+		assertThrows(RuntimeException.class, () -> {
+			SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+			list.first();
+		});
 	}
 
 	@Test
@@ -172,10 +180,12 @@ public class SinglyLinkedListTest {
 		assertTrue(list.first() == firstValue);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void last_emptyList_throwsException() {
-		SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
-		list.last();
+		assertThrows(RuntimeException.class, () -> {
+			SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+			list.last();
+		});
 	}
 
 	@Test
@@ -188,10 +198,12 @@ public class SinglyLinkedListTest {
 		assertTrue(list.last() == lastValue);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void removeFirst_emptyList_throwsException() {
-		SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
-		list.removeFirst();
+		assertThrows(RuntimeException.class, () -> {
+			SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+			list.removeFirst();
+		});
 	}
 
 	@Test
@@ -220,10 +232,12 @@ public class SinglyLinkedListTest {
 		assertFalse(iterator.hasNext());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void removeLast_emptyList_throwsException() {
-		SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
-		list.removeLast();
+		assertThrows(RuntimeException.class, () -> {
+			SinglyLinkedList<Integer> list = new SinglyLinkedList<>();
+			list.removeLast();
+		});
 	}
 
 	@Test

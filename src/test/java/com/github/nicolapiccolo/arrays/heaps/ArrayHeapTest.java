@@ -1,8 +1,10 @@
 package com.github.nicolapiccolo.arrays.heaps;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class ArrayHeapTest {
 	@Test
@@ -95,20 +97,24 @@ public class ArrayHeapTest {
 		assertTrue(nodes[3] == rootValue);
 	}
 	
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void insert_overflowCapacity_throwsException() {
-		Integer capacity = 1;
-		ArrayHeap<Integer> heap = new ArrayHeap<>(capacity);
-		Integer value = 1;
-		heap.insert(value);
-		heap.insert(value);
+		assertThrows(RuntimeException.class, () -> {
+			Integer capacity = 1;
+			ArrayHeap<Integer> heap = new ArrayHeap<>(capacity);
+			Integer value = 1;
+			heap.insert(value);
+			heap.insert(value);
+		});
 	}
 	
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void removeRoot_emptyHeap_throwsException() {
-		Integer capacity = 20;
-		ArrayHeap<Integer> heap = new ArrayHeap<>(capacity);
-		heap.removeRoot();
+		assertThrows(RuntimeException.class, () -> {
+			Integer capacity = 20;
+			ArrayHeap<Integer> heap = new ArrayHeap<>(capacity);
+			heap.removeRoot();
+		});
 	}
 	
 	@Test

@@ -1,12 +1,14 @@
 package com.github.nicolapiccolo.maps.skiplists;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
 import java.util.Optional;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class SkipListTest {
 
@@ -22,15 +24,19 @@ public class SkipListTest {
 		assertTrue(list.size() == 0);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void constructor_zeroMaxLevel_throwsException() {
-		new SkipList<String>(0);
+		assertThrows(RuntimeException.class, () -> {
+			new SkipList<String>(0);
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void put_nullKey_throwsException() {
-		SkipList<String> list = new SkipList<>();
-		list.put(null, "value");
+		assertThrows(RuntimeException.class, () -> {
+			SkipList<String> list = new SkipList<>();
+			list.put(null, "value");
+		});
 	}
 
 	@Test
@@ -59,10 +65,12 @@ public class SkipListTest {
 		assertTrue(list.get(1).get().equals("ONE"));
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void get_nullKey_throwsException() {
-		SkipList<String> list = new SkipList<>();
-		list.get(null);
+		assertThrows(RuntimeException.class, () -> {
+			SkipList<String> list = new SkipList<>();
+			list.get(null);
+		});
 	}
 
 	@Test
@@ -92,10 +100,12 @@ public class SkipListTest {
 		assertTrue(list.get(30).get().equals("thirty"));
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void delete_nullKey_throwsException() {
-		SkipList<String> list = new SkipList<>();
-		list.delete(null);
+		assertThrows(RuntimeException.class, () -> {
+			SkipList<String> list = new SkipList<>();
+			list.delete(null);
+		});
 	}
 
 	@Test
@@ -158,10 +168,12 @@ public class SkipListTest {
 		assertTrue(list.lastKey().get() == 30);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void floorKey_nullKey_throwsException() {
-		SkipList<String> list = new SkipList<>();
-		list.floorKey(null);
+		assertThrows(RuntimeException.class, () -> {
+			SkipList<String> list = new SkipList<>();
+			list.floorKey(null);
+		});
 	}
 
 	@Test
@@ -189,10 +201,12 @@ public class SkipListTest {
 		assertTrue(list.floorKey(5).isEmpty());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void ceilingKey_nullKey_throwsException() {
-		SkipList<String> list = new SkipList<>();
-		list.ceilingKey(null);
+		assertThrows(RuntimeException.class, () -> {
+			SkipList<String> list = new SkipList<>();
+			list.ceilingKey(null);
+		});
 	}
 
 	@Test

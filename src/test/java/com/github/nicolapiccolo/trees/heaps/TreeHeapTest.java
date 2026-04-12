@@ -1,10 +1,12 @@
 package com.github.nicolapiccolo.trees.heaps;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 import com.github.nicolapiccolo.trees.BinaryTreeIterator;
 import com.github.nicolapiccolo.trees.BinaryTreePreorderIterator;
@@ -100,10 +102,12 @@ public class TreeHeapTest {
 		assertTrue(values.get(3) == firstLeafValue);
 	}
 	
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void removeRoot_emptyHeap_throwsException() {
-		TreeHeap heap = new TreeHeap();
-		heap.removeRoot();
+		assertThrows(RuntimeException.class, () -> {
+			TreeHeap heap = new TreeHeap();
+			heap.removeRoot();
+		});
 	}
 	
 	@Test

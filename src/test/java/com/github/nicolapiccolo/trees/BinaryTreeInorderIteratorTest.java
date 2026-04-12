@@ -1,16 +1,20 @@
 package com.github.nicolapiccolo.trees;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class BinaryTreeInorderIteratorTest {
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void initializeWith() {
-		BinaryTreeNode root = null;
-		BinaryTreeIterator iterator = new BinaryTreeInorderIterator();
-		iterator.initializeWith(root);
+		assertThrows(RuntimeException.class, () -> {
+			BinaryTreeNode root = null;
+			BinaryTreeIterator iterator = new BinaryTreeInorderIterator();
+			iterator.initializeWith(root);
+		});
 	}	
 	@Test
 	public void hasNext_onlyRoot_returnsTrue() {

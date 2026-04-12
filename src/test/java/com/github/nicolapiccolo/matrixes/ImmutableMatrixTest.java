@@ -1,8 +1,10 @@
 package com.github.nicolapiccolo.matrixes;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class ImmutableMatrixTest {
 	@Test
@@ -26,18 +28,22 @@ public class ImmutableMatrixTest {
 		assertTrue(2 == matrix.getRank());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void getItemAt_outOfBoundaryRowIndex_throwException() {
-		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
-		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
-		matrix.getItemAt(10, 0);
+		assertThrows(RuntimeException.class, () -> {
+			double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
+			ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+			matrix.getItemAt(10, 0);
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void getItemAt_outOfBoundaryColumnIndex_throwException() {
-		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
-		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
-		matrix.getItemAt(0, 10);
+		assertThrows(RuntimeException.class, () -> {
+			double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
+			ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+			matrix.getItemAt(0, 10);
+		});
 	}
 
 	@Test
@@ -58,11 +64,13 @@ public class ImmutableMatrixTest {
 		assertTrue(firstRow[2] == 3);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void getRowAt_outOfBoundaryIndex_throwException() {
-		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
-		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
-		matrix.getRowAt(10);
+		assertThrows(RuntimeException.class, () -> {
+			double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
+			ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+			matrix.getRowAt(10);
+		});
 	}
 
 	@Test
@@ -74,11 +82,13 @@ public class ImmutableMatrixTest {
 		assertTrue(columnRow[1] == 4);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void getColumnAt_outOfBoundaryIndex_throwException() {
-		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
-		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
-		matrix.getColumnAt(10);
+		assertThrows(RuntimeException.class, () -> {
+			double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
+			ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+			matrix.getColumnAt(10);
+		});
 	}
 
 	@Test

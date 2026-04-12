@@ -1,15 +1,19 @@
 package com.github.nicolapiccolo.maps.hashtables;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class CompressorTest {
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void hashCodeOf_null_throwsException() {
-		Compressor compressor = new Compressor();
-		compressor.compress(0, null);
+		assertThrows(RuntimeException.class, () -> {
+			Compressor compressor = new Compressor();
+			compressor.compress(0, null);
+		});
 	}
 
 	@Test

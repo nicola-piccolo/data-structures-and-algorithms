@@ -1,11 +1,13 @@
 package com.github.nicolapiccolo.lists.doublyLinked;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class DoublyLinkedListTest {
 
@@ -75,16 +77,20 @@ public class DoublyLinkedListTest {
 		assertFalse(iterator.hasNext());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void addAt_negativePosition_throwsException() {
-		DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
-		list.addAt(-1, 10);
+		assertThrows(RuntimeException.class, () -> {
+			DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+			list.addAt(-1, 10);
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void addAt_outOfBoundPosition_throwsException() {
-		DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
-		list.addAt(10, 10);
+		assertThrows(RuntimeException.class, () -> {
+			DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+			list.addAt(10, 10);
+		});
 	}
 
 	@Test
@@ -126,10 +132,12 @@ public class DoublyLinkedListTest {
 		assertFalse(iterator.hasNext());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void first_emptyList_throwsException() {
-		DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
-		list.first();
+		assertThrows(RuntimeException.class, () -> {
+			DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+			list.first();
+		});
 	}
 
 	@Test
@@ -141,10 +149,12 @@ public class DoublyLinkedListTest {
 		assertTrue(list.first() == firstValue);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void last_emptyList_throwsException() {
-		DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
-		list.last();
+		assertThrows(RuntimeException.class, () -> {
+			DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+			list.last();
+		});
 	}
 
 	@Test
@@ -156,10 +166,12 @@ public class DoublyLinkedListTest {
 		assertTrue(list.last() == lastValue);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void removeFirst_emptyList_throwsException() {
-		DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
-		list.removeFirst();
+		assertThrows(RuntimeException.class, () -> {
+			DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+			list.removeFirst();
+		});
 	}
 
 	@Test
@@ -183,10 +195,12 @@ public class DoublyLinkedListTest {
 		assertFalse(iterator.hasNext());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void removeLast_emptyList_throwsException() {
-		DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
-		list.removeLast();
+		assertThrows(RuntimeException.class, () -> {
+			DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+			list.removeLast();
+		});
 	}
 
 	@Test

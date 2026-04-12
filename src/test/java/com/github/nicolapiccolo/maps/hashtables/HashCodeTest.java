@@ -1,15 +1,19 @@
 package com.github.nicolapiccolo.maps.hashtables;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class HashCodeTest {
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void hashCodeOf_null_throwsException() {
-		HashCode hashCode = new HashCode();
-		hashCode.hashCodeOf(null);
+		assertThrows(RuntimeException.class, () -> {
+			HashCode hashCode = new HashCode();
+			hashCode.hashCodeOf(null);
+		});
 	}
 
 	@Test

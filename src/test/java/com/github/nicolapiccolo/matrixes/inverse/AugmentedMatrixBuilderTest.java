@@ -1,26 +1,32 @@
 package com.github.nicolapiccolo.matrixes.inverse;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 import com.github.nicolapiccolo.matrixes.ImmutableMatrix;
 
 public class AugmentedMatrixBuilderTest {
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void buildFrom_zeroRank_throwsException() {
-		double[][] inputMatrix = { {} };
-		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
-		AugmentedMatrixBuilder builder = new AugmentedMatrixBuilder();
-		builder.buildFrom(matrix);
+		assertThrows(RuntimeException.class, () -> {
+			double[][] inputMatrix = { {} };
+			ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+			AugmentedMatrixBuilder builder = new AugmentedMatrixBuilder();
+			builder.buildFrom(matrix);
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void buildFrom_nonSquareMatrix_throwsException() {
-		double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
-		ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
-		AugmentedMatrixBuilder builder = new AugmentedMatrixBuilder();
-		builder.buildFrom(matrix);
+		assertThrows(RuntimeException.class, () -> {
+			double[][] inputMatrix = { { 1, 2, 3 }, { 4, 5, 6 } };
+			ImmutableMatrix matrix = new ImmutableMatrix(inputMatrix);
+			AugmentedMatrixBuilder builder = new AugmentedMatrixBuilder();
+			builder.buildFrom(matrix);
+		});
 	}
 
 	@Test

@@ -1,9 +1,11 @@
 package com.github.nicolapiccolo.queues;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class QueueTest {
 
@@ -19,14 +21,18 @@ public class QueueTest {
 		assertTrue(queue.size() == 0);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void constructor_zeroCapacity_throwsException() {
-		new Queue<Integer>(0);
+		assertThrows(RuntimeException.class, () -> {
+			new Queue<Integer>(0);
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void constructor_negativeCapacity_throwsException() {
-		new Queue<Integer>(-1);
+		assertThrows(RuntimeException.class, () -> {
+			new Queue<Integer>(-1);
+		});
 	}
 
 	@Test
@@ -45,10 +51,12 @@ public class QueueTest {
 		assertTrue(queue.size() == 2);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void dequeue_emptyQueue_throwsException() {
-		Queue<Integer> queue = new Queue<>();
-		queue.dequeue();
+		assertThrows(RuntimeException.class, () -> {
+			Queue<Integer> queue = new Queue<>();
+			queue.dequeue();
+		});
 	}
 
 	@Test
@@ -72,10 +80,12 @@ public class QueueTest {
 		assertTrue(queue.isEmpty());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void peek_emptyQueue_throwsException() {
-		Queue<Integer> queue = new Queue<>();
-		queue.peek();
+		assertThrows(RuntimeException.class, () -> {
+			Queue<Integer> queue = new Queue<>();
+			queue.peek();
+		});
 	}
 
 	@Test

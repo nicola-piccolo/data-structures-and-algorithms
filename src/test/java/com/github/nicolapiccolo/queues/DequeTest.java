@@ -1,9 +1,11 @@
 package com.github.nicolapiccolo.queues;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class DequeTest {
 
@@ -19,14 +21,18 @@ public class DequeTest {
 		assertTrue(deque.size() == 0);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void constructor_zeroCapacity_throwsException() {
-		new Deque<Integer>(0);
+		assertThrows(RuntimeException.class, () -> {
+			new Deque<Integer>(0);
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void constructor_negativeCapacity_throwsException() {
-		new Deque<Integer>(-1);
+		assertThrows(RuntimeException.class, () -> {
+			new Deque<Integer>(-1);
+		});
 	}
 
 	@Test
@@ -81,28 +87,36 @@ public class DequeTest {
 		assertTrue(deque.removeLast() == 20);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void removeFirst_emptyDeque_throwsException() {
-		Deque<Integer> deque = new Deque<>();
-		deque.removeFirst();
+		assertThrows(RuntimeException.class, () -> {
+			Deque<Integer> deque = new Deque<>();
+			deque.removeFirst();
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void removeLast_emptyDeque_throwsException() {
-		Deque<Integer> deque = new Deque<>();
-		deque.removeLast();
+		assertThrows(RuntimeException.class, () -> {
+			Deque<Integer> deque = new Deque<>();
+			deque.removeLast();
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void peekFirst_emptyDeque_throwsException() {
-		Deque<Integer> deque = new Deque<>();
-		deque.peekFirst();
+		assertThrows(RuntimeException.class, () -> {
+			Deque<Integer> deque = new Deque<>();
+			deque.peekFirst();
+		});
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void peekLast_emptyDeque_throwsException() {
-		Deque<Integer> deque = new Deque<>();
-		deque.peekLast();
+		assertThrows(RuntimeException.class, () -> {
+			Deque<Integer> deque = new Deque<>();
+			deque.peekLast();
+		});
 	}
 
 	@Test

@@ -1,15 +1,19 @@
 package com.github.nicolapiccolo.maps.hashtables;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class CompressorParametersDtoFactoryTest {
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void getDtoFrom_one_throwsException() {
-		CompressorParametersDtoFactory factory = new CompressorParametersDtoFactory();
-		factory.getDtoFrom(1);
+		assertThrows(RuntimeException.class, () -> {
+			CompressorParametersDtoFactory factory = new CompressorParametersDtoFactory();
+			factory.getDtoFrom(1);
+		});
 	}
 
 	@Test

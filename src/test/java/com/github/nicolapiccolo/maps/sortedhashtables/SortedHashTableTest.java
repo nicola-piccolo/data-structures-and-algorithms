@@ -1,12 +1,14 @@
 package com.github.nicolapiccolo.maps.sortedhashtables;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Iterator;
 import java.util.Optional;
 
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+import org.junit.jupiter.api.Test;
 
 public class SortedHashTableTest {
 
@@ -22,10 +24,12 @@ public class SortedHashTableTest {
 		assertTrue(table.size() == 0);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void put_nullKey_throwsException() {
-		SortedHashTable<String> table = new SortedHashTable<>();
-		table.put(null, "value");
+		assertThrows(RuntimeException.class, () -> {
+			SortedHashTable<String> table = new SortedHashTable<>();
+			table.put(null, "value");
+		});
 	}
 
 	@Test
@@ -45,10 +49,12 @@ public class SortedHashTableTest {
 		assertTrue(table.get(1).get().equals("ONE"));
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void get_nullKey_throwsException() {
-		SortedHashTable<String> table = new SortedHashTable<>();
-		table.get(null);
+		assertThrows(RuntimeException.class, () -> {
+			SortedHashTable<String> table = new SortedHashTable<>();
+			table.get(null);
+		});
 	}
 
 	@Test
@@ -67,10 +73,12 @@ public class SortedHashTableTest {
 		assertTrue(table.get(2).isEmpty());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void delete_nullKey_throwsException() {
-		SortedHashTable<String> table = new SortedHashTable<>();
-		table.delete(null);
+		assertThrows(RuntimeException.class, () -> {
+			SortedHashTable<String> table = new SortedHashTable<>();
+			table.delete(null);
+		});
 	}
 
 	@Test
@@ -120,10 +128,12 @@ public class SortedHashTableTest {
 		assertTrue(table.lastKey().get() == 30);
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void floorKey_nullKey_throwsException() {
-		SortedHashTable<String> table = new SortedHashTable<>();
-		table.floorKey(null);
+		assertThrows(RuntimeException.class, () -> {
+			SortedHashTable<String> table = new SortedHashTable<>();
+			table.floorKey(null);
+		});
 	}
 
 	@Test
@@ -151,10 +161,12 @@ public class SortedHashTableTest {
 		assertTrue(table.floorKey(5).isEmpty());
 	}
 
-	@Test(expected = RuntimeException.class)
+	@Test
 	public void ceilingKey_nullKey_throwsException() {
-		SortedHashTable<String> table = new SortedHashTable<>();
-		table.ceilingKey(null);
+		assertThrows(RuntimeException.class, () -> {
+			SortedHashTable<String> table = new SortedHashTable<>();
+			table.ceilingKey(null);
+		});
 	}
 
 	@Test
