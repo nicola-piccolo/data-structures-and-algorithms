@@ -3,6 +3,8 @@ package com.github.nicolapiccolo.matrixes.inverse;
 import com.github.nicolapiccolo.matrixes.ImmutableMatrix;
 
 public class InverseMatrixBuilder {
+	private static final double EPSILON = 1e-10;
+
 	public ImmutableMatrix buildFrom(ImmutableMatrix originalMatrix) {
 		ImmutableMatrix augmentedMatrix = this.buildAugmentedMatrixFrom(originalMatrix);
 		double[][] result = this.calculateInverseMatrixFrom(augmentedMatrix);
@@ -24,8 +26,8 @@ public class InverseMatrixBuilder {
 	private void applyJordanGaussEliminationTo(double[][] items) {
 		int rowDimension = items.length;
 		for (int diagonalIndex = 0; diagonalIndex < rowDimension; diagonalIndex++) {
-			if (items[diagonalIndex][diagonalIndex] == 0) {
-				throw new RuntimeException("Cannot calculate matrix inverse!");
+			if (Math.abs(items[diagonalIndex][diagonalIndex]) < EPSILON) {
+				throw new IllegalStateException("Cannot calculate matrix inverse!");
 			}
 			for (int currentRowIndex = 0; currentRowIndex < rowDimension; currentRowIndex++) {
 				if (currentRowIndex != diagonalIndex) {
@@ -36,16 +38,7 @@ public class InverseMatrixBuilder {
 	}
 
 	private void multiplyAndSumToCurrentRow(int currentRowIndex, int diagonalIndex, double[][] items) {
-		double ratio = this.getRatioBetween(currentRowIndex, diagonalIndex, items);
-		this.sumDiagonalRowToCurrentRow(currentRowIndex, diagonalIndex, ratio, items);
-	}
-
-	private double getRatioBetween(int currentRowIndex, int diagonalIndex, double[][] items) {
 		double ratio = items[currentRowIndex][diagonalIndex] / items[diagonalIndex][diagonalIndex];
-		return ratio;
-	}
-
-	private void sumDiagonalRowToCurrentRow(int currentRowIndex, int diagonalIndex, double ratio, double[][] items) {
 		int columnDimension = items.length * 2;
 		for (int columnIndex = 0; columnIndex < columnDimension; columnIndex++) {
 			items[currentRowIndex][columnIndex] -= ratio * items[diagonalIndex][columnIndex];
@@ -67,8 +60,7 @@ public class InverseMatrixBuilder {
 		double[][] inverse = new double[rank][rank];
 		for (int rowIndex = 0; rowIndex < rank; rowIndex++) {
 			for (int columnIndex = 0; columnIndex < rank; columnIndex++) {
-				int augmentedColumnIndex = items.length + columnIndex;
-				inverse[rowIndex][columnIndex] = items[rowIndex][augmentedColumnIndex];
+				inverse[rowIndex][columnIndex] = items[rowIndex][rank + columnIndex];
 			}
 		}
 		return new ImmutableMatrix(inverse);

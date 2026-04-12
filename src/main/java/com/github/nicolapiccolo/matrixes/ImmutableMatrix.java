@@ -6,44 +6,37 @@ public class ImmutableMatrix {
 	private double[][] items;
 
 	public ImmutableMatrix(double[][] originalItems) {
-		this.rowDimension = this.getRowDimensionFrom(originalItems);
+		this.validateItems(originalItems);
+		this.rowDimension = originalItems.length;
 		this.columnDimension = this.getColumnDimensionFrom(originalItems);
 		this.items = this.buildItemsFrom(originalItems);
 	}
 
-	private int getRowDimensionFrom(double[][] originalItems) {
-		return originalItems.length;
+	private void validateItems(double[][] originalItems) {
+		if (originalItems.length == 0) {
+			return;
+		}
+		int expectedColumnLength = originalItems[0].length;
+		for (int rowIndex = 1; rowIndex < originalItems.length; rowIndex++) {
+			if (originalItems[rowIndex].length != expectedColumnLength) {
+				throw new IllegalArgumentException("Jagged arrays are not supported!");
+			}
+		}
 	}
 
 	private int getColumnDimensionFrom(double[][] originalItems) {
-		int rowDimension = originalItems.length;
-		if (rowDimension == 0) {
+		if (originalItems.length == 0) {
 			return 0;
 		}
-		double[] firstRow = originalItems[0];
-		return firstRow.length;
+		return originalItems[0].length;
 	}
 
 	private double[][] buildItemsFrom(double[][] originalItems) {
-		int rowDimension = this.getRowDimensionFrom(originalItems);
-		int columnDimension = this.getColumnDimensionFrom(originalItems);
-		double[][] newItems = this.buildEmptyItemsWith(rowDimension, columnDimension);
-		for (int rowIndex = 0; rowIndex < rowDimension; rowIndex++) {
-			double[] rowToCopy = originalItems[rowIndex];
-			this.copyRowWith(newItems, rowIndex, rowToCopy);
+		double[][] newItems = new double[originalItems.length][this.columnDimension];
+		for (int rowIndex = 0; rowIndex < originalItems.length; rowIndex++) {
+			System.arraycopy(originalItems[rowIndex], 0, newItems[rowIndex], 0, this.columnDimension);
 		}
 		return newItems;
-	}
-
-	private double[][] buildEmptyItemsWith(int rowDimension, int columnDimension) {
-		return new double[rowDimension][columnDimension];
-	}
-
-	private void copyRowWith(double[][] items, int rowIndex, double[] rowToCopy) {
-		double[] rowToUpdate = items[rowIndex];
-		for (int columnIndex = 0; columnIndex < rowToUpdate.length; columnIndex++) {
-			rowToUpdate[columnIndex] = rowToCopy[columnIndex];
-		}
 	}
 
 	public int getRowDimension() {
@@ -59,43 +52,37 @@ public class ImmutableMatrix {
 	}
 
 	public double getItemAt(int rowIndex, int columnIndex) {
-		if (rowIndex >= this.rowDimension) {
-			throw new RuntimeException("Row index out of boundary!");
-		}
-		if (columnIndex >= this.columnDimension) {
-			throw new RuntimeException("Column index out of boundary!");
-		}
+		this.validateRowIndex(rowIndex);
+		this.validateColumnIndex(columnIndex);
 		return this.items[rowIndex][columnIndex];
 	}
 
 	public double[] getRowAt(int rowIndex) {
-		if (rowIndex >= this.rowDimension) {
-			throw new RuntimeException("Row index out of boundary!");
-		}
-		return this.doGetRowAt(rowIndex);
-	}
-
-	private double[] doGetRowAt(int rowIndex) {
+		this.validateRowIndex(rowIndex);
 		double[] row = new double[this.columnDimension];
-		for (int columnIndex = 0; columnIndex < this.columnDimension; columnIndex++) {
-			row[columnIndex] = this.items[rowIndex][columnIndex];
-		}
+		System.arraycopy(this.items[rowIndex], 0, row, 0, this.columnDimension);
 		return row;
 	}
 
 	public double[] getColumnAt(int columnIndex) {
-		if (columnIndex >= this.columnDimension) {
-			throw new RuntimeException("Column index out of boundary!");
+		this.validateColumnIndex(columnIndex);
+		double[] column = new double[this.rowDimension];
+		for (int rowIndex = 0; rowIndex < this.rowDimension; rowIndex++) {
+			column[rowIndex] = this.items[rowIndex][columnIndex];
 		}
-		return this.doGetColumnAt(columnIndex);
+		return column;
 	}
 
-	private double[] doGetColumnAt(int columnIndex) {
-		double[] row = new double[this.rowDimension];
-		for (int rowIndex = 0; rowIndex < this.rowDimension; rowIndex++) {
-			row[rowIndex] = this.items[rowIndex][columnIndex];
+	private void validateRowIndex(int rowIndex) {
+		if (rowIndex < 0 || rowIndex >= this.rowDimension) {
+			throw new IllegalArgumentException("Row index out of boundary!");
 		}
-		return row;
+	}
+
+	private void validateColumnIndex(int columnIndex) {
+		if (columnIndex < 0 || columnIndex >= this.columnDimension) {
+			throw new IllegalArgumentException("Column index out of boundary!");
+		}
 	}
 
 	public double[][] getItems() {
