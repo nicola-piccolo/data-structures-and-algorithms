@@ -7,7 +7,7 @@ public class BinaryTreePreorderIterator implements BinaryTreeIterator {
 
 	public void initializeWith(BinaryTreeNode root) {
 		if(root==null) {
-			throw new RuntimeException("Root node is null!");
+			throw new IllegalArgumentException("Root node is null!");
 		}
 		this.nodesToVisit.push(root);
 	}
@@ -19,16 +19,11 @@ public class BinaryTreePreorderIterator implements BinaryTreeIterator {
 
 	@Override
 	public Integer next() {
-		BinaryTreeNode node = this.getNextNodeToVisit();
+		BinaryTreeNode node = this.nodesToVisit.pop();
 		this.loadChildrenOf(node);
 		return node.getValue();
 	}
 
-	private BinaryTreeNode getNextNodeToVisit() {
-		BinaryTreeNode node = this.nodesToVisit.pop();
-		return node;
-	}
-	
 	private void loadChildrenOf(BinaryTreeNode node) {
 		if(node.getRightChild()!=null) {
 			this.nodesToVisit.push(node.getRightChild());

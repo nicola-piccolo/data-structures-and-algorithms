@@ -5,17 +5,17 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-public class BinarySeachNodesCounterTest {
+public class BinarySearchNodesCounterTest {
 
 	@Test
 	public void isEmpty_justConstructed_true() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		assertTrue(counter.isEmpty());
 	}
 	
 	@Test
 	public void initializeSizeToOne() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		assertTrue(counter.isEmpty());
 		counter.initializeSizeToOne();
 		assertFalse(counter.isEmpty());
@@ -23,27 +23,27 @@ public class BinarySeachNodesCounterTest {
 	
 	@Test
 	public void getSize_justConstructed_zero() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		assertTrue(counter.getSize() == 0);
 	}
 	
 	@Test
 	public void getSize_initializeSizeToOne_one() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		counter.initializeSizeToOne();
 		assertTrue(counter.getSize() == 1);
 	}
 	
 	@Test
 	public void decreaseSize_justConstructed_noop() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		counter.decreaseSize();
 		assertTrue(counter.isEmpty());
 	}
 	
 	@Test
 	public void decreaseSize_initializeSizeToOne_empty() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		counter.initializeSizeToOne();
 		counter.decreaseSize();
 		assertTrue(counter.isEmpty());
@@ -51,14 +51,14 @@ public class BinarySeachNodesCounterTest {
 	
 	@Test
 	public void resetSize_justConstructed_noop() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		counter.resetSize();
 		assertTrue(counter.isEmpty());
 	}	
 	
 	@Test
 	public void resetSize_initializeSizeToOne_empty() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		counter.initializeSizeToOne();
 		counter.resetSize();
 		assertTrue(counter.isEmpty());
@@ -66,7 +66,7 @@ public class BinarySeachNodesCounterTest {
 	
 	@Test
 	public void updateSizeOnPut_isNew_increaseSize() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		boolean isNewKey = true;
 		boolean isMatchingNodeDeleted = false;
 		counter.updateSizeOnPut(isNewKey, isMatchingNodeDeleted);
@@ -75,7 +75,7 @@ public class BinarySeachNodesCounterTest {
 	
 	@Test
 	public void updateSizeOnPut_isNotNewButMatchingDeletedNode_increaseSize() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		boolean isNewKey = false;
 		boolean isMatchingNodeDeleted = true;
 		counter.updateSizeOnPut(isNewKey, isMatchingNodeDeleted);
@@ -84,7 +84,7 @@ public class BinarySeachNodesCounterTest {
 	
 	@Test
 	public void updateSizeOnPut_isNotNewAndNotMatchingDeletedNode_noSizeIncrease() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		boolean isNewKey = false;
 		boolean isMatchingNodeDeleted = false;
 		counter.updateSizeOnPut(isNewKey, isMatchingNodeDeleted);
@@ -93,13 +93,13 @@ public class BinarySeachNodesCounterTest {
 	
 	@Test
 	public void hasDeletedNodesCountPassedThreshold_justConstructed_false() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		assertFalse(counter.hasDeletedNodesCountPassedThreshold());
 	}
 	
 	@Test
 	public void hasDeletedNodesCountPassedThreshold_initializeSize_false() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		counter.initializeSizeToOne();
 		assertFalse(counter.hasDeletedNodesCountPassedThreshold());
 	}
@@ -108,7 +108,7 @@ public class BinarySeachNodesCounterTest {
 	public void hasDeletedNodesCountPassedThreshold_initializeSizeWithThresholdSetToOne_true() {
 		int deletedNodesPercentageThreshold = 80;
 		int deletedNodesCountThreshold = 1;
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter(deletedNodesPercentageThreshold, deletedNodesCountThreshold);
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter(deletedNodesPercentageThreshold, deletedNodesCountThreshold);
 		counter.initializeSizeToOne();
 		counter.decreaseSize();
 		assertTrue(counter.hasDeletedNodesCountPassedThreshold());
@@ -116,13 +116,13 @@ public class BinarySeachNodesCounterTest {
 	
 	@Test
 	public void hasDeletedNodesPercentagePassedThreshold_justConstructed_false() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		assertFalse(counter.hasDeletedNodesPercentagePassedThreshold());
 	}
 	
 	@Test
 	public void hasDeletedNodesPercentagePassedThreshold_initializeSize_false() {
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		counter.initializeSizeToOne();
 		assertFalse(counter.hasDeletedNodesPercentagePassedThreshold());
 	}
@@ -131,7 +131,7 @@ public class BinarySeachNodesCounterTest {
 	public void hasDeletedNodesPercentagePassedThreshold_initializeSizeWithPercentageSetToFifty_false() {
 		int deletedNodesPercentageThreshold = 50;
 		int deletedNodesCountThreshold = 1;
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter(deletedNodesPercentageThreshold, deletedNodesCountThreshold);
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter(deletedNodesPercentageThreshold, deletedNodesCountThreshold);
 		counter.initializeSizeToOne();
 		counter.decreaseSize();
 		assertTrue(counter.hasDeletedNodesPercentagePassedThreshold());

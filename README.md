@@ -42,3 +42,14 @@ An evergreen topic in computer science are lists; here I have worked on some inp
 A fundamental data structure for key-value storage:
 
 - [Hash table](/src/main/java/com/github/nicolapiccolo/maps/hashtables/HashTable.md)
+
+
+## Trees
+
+A collection of tree-based data structures and algorithms:
+
+- [Binary tree traversals](/src/main/java/com/github/nicolapiccolo/trees/BinaryTreeTraversals.md)
+
+- [Binary search tree with AVL balancing](/src/main/java/com/github/nicolapiccolo/trees/binarysearch/BinarySearchTree.md)
+
+- [Tree-backed min-heap](/src/main/java/com/github/nicolapiccolo/trees/heaps/TreeHeap.md)

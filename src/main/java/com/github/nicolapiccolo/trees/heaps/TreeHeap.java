@@ -103,7 +103,7 @@ public class TreeHeap {
 	
 	public Integer removeRoot() {
 		if(this.root == null) {
-			throw new RuntimeException("Empty tree, cannot remote root");
+			throw new IllegalStateException("Empty tree, cannot remove root");
 		}
 		Integer valueToReturn = this.root.getValue();
 		this.moveLatestLeafToRoot();
@@ -111,7 +111,7 @@ public class TreeHeap {
 		return valueToReturn;
 	}
 	
-	public void moveLatestLeafToRoot() {
+	private void moveLatestLeafToRoot() {
 		if(!this.root.hasLeftChild() && !this.root.hasRightChild()) {
 			this.resetHeap();
 			return;

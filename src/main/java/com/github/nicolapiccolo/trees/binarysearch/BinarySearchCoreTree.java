@@ -3,17 +3,17 @@ package com.github.nicolapiccolo.trees.binarysearch;
 import java.util.Optional;
 
 public class BinarySearchCoreTree<V> implements BinarySearchTree<V> {
-	private BinarySeachNodesCounter counter;
+	private BinarySearchNodesCounter counter;
 	private Optional<BinarySearchTreeNode<V>> root = Optional.empty();
 	private Optional<BinarySearchTreePutPostProcessor<V>> putPostProcessor = Optional.empty();
 	private Optional<BinarySearchTreeDeletePostProcessor<V>> deletePostProcessor = Optional.empty();
 
 	public BinarySearchCoreTree() {
-		this.counter = new BinarySeachNodesCounter();
+		this.counter = new BinarySearchNodesCounter();
 	}
 	
 	public BinarySearchCoreTree(int deletedNodesPercentage, int deletedNodesCountThreshold) {
-		this.counter = new BinarySeachNodesCounter(deletedNodesPercentage, deletedNodesCountThreshold);
+		this.counter = new BinarySearchNodesCounter(deletedNodesPercentage, deletedNodesCountThreshold);
 	}
 	
 	@Override
@@ -74,7 +74,7 @@ public class BinarySearchCoreTree<V> implements BinarySearchTree<V> {
 	}
 	
 	private void doPutPostProcess(Integer key) {
-		if(!this.putPostProcessor.isEmpty()) {
+		if(this.putPostProcessor.isPresent()) {
 			BinarySearchTreePutPostProcessor<V> processor = this.putPostProcessor.get();
 			processor.processWith(key, this.root.get());
 		}

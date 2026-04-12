@@ -1,14 +1,14 @@
 package com.github.nicolapiccolo.trees.binarysearch;
 
-public class BinarySeachNodesCounter {
+public class BinarySearchNodesCounter {
 	private int activeNodesCount = 0;
 	private int deletedNodesCount = 0;
 	private int deletedNodesPercentageThreshold = 20;
 	private int deletedNodesCountThreshold = 100;
 
-	public BinarySeachNodesCounter() {}
+	public BinarySearchNodesCounter() {}
 
-	public BinarySeachNodesCounter(int deletedNodesPercentageThreshold, int deletedNodesCountThreshold) {
+	public BinarySearchNodesCounter(int deletedNodesPercentageThreshold, int deletedNodesCountThreshold) {
 		this.deletedNodesPercentageThreshold = deletedNodesPercentageThreshold;
 		this.deletedNodesCountThreshold = deletedNodesCountThreshold;
 	}
@@ -56,7 +56,7 @@ public class BinarySeachNodesCounter {
 		if((this.deletedNodesCount + this.activeNodesCount) == 0) {
 			return false;
 		}
-		double currentDeletedNodesPercentage = 100 * this.deletedNodesCount / (this.deletedNodesCount + this.activeNodesCount);
+		double currentDeletedNodesPercentage = 100.0 * this.deletedNodesCount / (this.deletedNodesCount + this.activeNodesCount);
 		return currentDeletedNodesPercentage >= this.deletedNodesPercentageThreshold;
 	}
 }

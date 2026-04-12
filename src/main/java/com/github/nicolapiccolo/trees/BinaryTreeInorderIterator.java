@@ -5,10 +5,11 @@ import java.util.List;
 
 public class BinaryTreeInorderIterator implements BinaryTreeIterator {
 	private List<BinaryTreeNode> nodesToVisit = new ArrayList<>();
+	private int currentIndex = 0;
 
 	public void initializeWith(BinaryTreeNode root) {
 		if(root==null) {
-			throw new RuntimeException("Root node is null!");
+			throw new IllegalArgumentException("Root node is null!");
 		}
 		this.loadAllDescendantOf(root);
 	}
@@ -24,17 +25,12 @@ public class BinaryTreeInorderIterator implements BinaryTreeIterator {
 
 	@Override
 	public boolean hasNext() {
-		return !this.nodesToVisit.isEmpty();
+		return this.currentIndex < this.nodesToVisit.size();
 	}
 
 	@Override
 	public Integer next() {
-		BinaryTreeNode node = this.getNextNodeToVisit();
+		BinaryTreeNode node = this.nodesToVisit.get(this.currentIndex++);
 		return node.getValue();
-	}
-
-	private BinaryTreeNode getNextNodeToVisit() {
-		BinaryTreeNode node = this.nodesToVisit.remove(0);
-		return node;
 	}
 }

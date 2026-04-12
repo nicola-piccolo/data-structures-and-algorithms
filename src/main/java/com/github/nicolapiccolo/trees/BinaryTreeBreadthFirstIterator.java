@@ -1,14 +1,14 @@
 package com.github.nicolapiccolo.trees;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class BinaryTreeBreadthFirstIterator implements BinaryTreeIterator {
-	private List<BinaryTreeNode> nodesToVisit = new ArrayList<>();
+	private Deque<BinaryTreeNode> nodesToVisit = new ArrayDeque<>();
 
 	public void initializeWith(BinaryTreeNode root) {
 		if(root==null) {
-			throw new RuntimeException("Root node is null!");
+			throw new IllegalArgumentException("Root node is null!");
 		}
 		this.nodesToVisit.add(root);
 	}
@@ -20,22 +20,17 @@ public class BinaryTreeBreadthFirstIterator implements BinaryTreeIterator {
 
 	@Override
 	public Integer next() {
-		BinaryTreeNode node = this.getNextNodeToVisit();
+		BinaryTreeNode node = this.nodesToVisit.poll();
 		this.loadChildrenOf(node);
 		return node.getValue();
 	}
 
-	private BinaryTreeNode getNextNodeToVisit() {
-		BinaryTreeNode node = this.nodesToVisit.remove(this.nodesToVisit.size()-1);
-		return node;
-	}
-	
 	private void loadChildrenOf(BinaryTreeNode node) {
 		if(node.getLeftChild()!=null) {
-			this.nodesToVisit.add(0, node.getLeftChild());
+			this.nodesToVisit.add(node.getLeftChild());
 		}		
 		if(node.getRightChild()!=null) {
-			this.nodesToVisit.add(0, node.getRightChild());
+			this.nodesToVisit.add(node.getRightChild());
 		}
 	}
 }

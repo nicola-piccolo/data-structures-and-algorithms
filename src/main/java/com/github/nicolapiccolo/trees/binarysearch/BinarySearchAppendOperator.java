@@ -1,9 +1,9 @@
 package com.github.nicolapiccolo.trees.binarysearch;
 
 public class BinarySearchAppendOperator<V> {
-	private BinarySeachNodesCounter counter;
+	private BinarySearchNodesCounter counter;
 	
-	public BinarySearchAppendOperator(BinarySeachNodesCounter counter) {
+	public BinarySearchAppendOperator(BinarySearchNodesCounter counter) {
 		this.counter = counter;
 	}
 	

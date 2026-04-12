@@ -11,7 +11,7 @@ public class BinarySearchDeleteOperatorTest {
 		Integer key = 3;
 		String value = "value";		
 		BinarySearchTreeNode<String> rootNode = new BinarySearchTreeNode<String>(key, value);
-		BinarySeachNodesCounter counter = new BinarySeachNodesCounter();
+		BinarySearchNodesCounter counter = new BinarySearchNodesCounter();
 		BinarySearchDeleteOperator<String> deleteOperator = new BinarySearchDeleteOperator<String>(counter);
 		deleteOperator.delete(rootNode);
 		assertTrue(rootNode.isDeleted());

@@ -64,7 +64,9 @@ public class BinarySearchTreeNode<V> {
 	}
 	
 	public void resetLeftChild(){
-		this.leftChild.resetParent();
+		if(this.leftChild != null) {
+			this.leftChild.resetParent();
+		}
 		this.leftChild = null;
 	}
 	
@@ -82,7 +84,9 @@ public class BinarySearchTreeNode<V> {
 	}
 	
 	public void resetRightChild(){
-		this.rightChild.resetParent();
+		if(this.rightChild != null) {
+			this.rightChild.resetParent();
+		}
 		this.rightChild = null;
 	}
 
