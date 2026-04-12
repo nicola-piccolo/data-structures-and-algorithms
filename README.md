@@ -45,6 +45,10 @@ A fundamental data structure for key-value storage:
 
 - [Hash table](/src/main/java/com/github/nicolapiccolo/maps/hashtables/HashTable.md)
 
+- [Sorted hash table](/src/main/java/com/github/nicolapiccolo/maps/sortedhashtables/SortedHashTable.md)
+
+- [Skip list](/src/main/java/com/github/nicolapiccolo/maps/skiplists/SkipList.md)
+
 
 ## Trees
 
