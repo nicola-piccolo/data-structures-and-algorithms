@@ -36,6 +36,8 @@ An evergreen topic in computer science are lists; here I have worked on some inp
 
 - [Singly linked list](/src/main/java/com/github/nicolapiccolo/lists/singlyLinked/SinglyLinkedList.md)
 
+- [Doubly linked list](/src/main/java/com/github/nicolapiccolo/lists/doublyLinked/DoublyLinkedList.md)
+
 
 ## Maps
 
