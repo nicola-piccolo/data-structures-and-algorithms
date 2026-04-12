@@ -5,32 +5,16 @@ import java.util.Arrays;
 public class CompressorParametersDtoFactory {
 	public CompressorParametersDto getDtoFrom(int bucketArraySize) {
 		if(bucketArraySize < 2) {
-			throw new RuntimeException("Bucket array size must be greater than 1");
+			throw new IllegalArgumentException("Bucket array size must be greater than 1");
 		}
 		return doGetDtoFrom(bucketArraySize);
 	}
 	
 	private CompressorParametersDto doGetDtoFrom(int bucketArraySize) {
-		CompressorParametersDto dto = this.initializeDtoWith(bucketArraySize);
-		this.setModulo(dto, bucketArraySize);
-		this.setMultiplier(dto);
-		this.setOffset(dto);
-		return dto;
-	}
-	
-	private CompressorParametersDto initializeDtoWith(int bucketArraySize) {
-		CompressorParametersDto dto = new CompressorParametersDto();
-		this.setBucketArraySize(dto, bucketArraySize);
-		return dto;
-	}
-	
-	private void setBucketArraySize(CompressorParametersDto dto, int bucketArraySize) {
-		dto.bucketArraySize = bucketArraySize;
-	}
-	
-	private void setModulo(CompressorParametersDto dto, int bucketArraySize) {
 		int modulo = this.findFirstPrimeNumberGreaterThan(bucketArraySize);
-		dto.modulo = modulo;
+		int multiplier = this.getRandomNumberLessThan(modulo);
+		int offset = this.getRandomNumberLessThan(modulo);
+		return new CompressorParametersDto(multiplier, offset, modulo, bucketArraySize);
 	}
 	
 	private int findFirstPrimeNumberGreaterThan(int bucketArraySize) {
@@ -65,15 +49,7 @@ public class CompressorParametersDtoFactory {
 		return primeNumber;
 	}
 	
-	private void setMultiplier(CompressorParametersDto dto) {
-		dto.multiplier = this.getRandomNumberLessThan(dto.modulo);
-	}
-	
 	private int getRandomNumberLessThan(int limit) {
 		return (int)((limit-2) * Math.random() + 1);
-	}
-	
-	private void setOffset(CompressorParametersDto dto) {
-		dto.offset = this.getRandomNumberLessThan(dto.modulo);
 	}
 }

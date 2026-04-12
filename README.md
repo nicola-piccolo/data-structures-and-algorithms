@@ -35,3 +35,10 @@ I concentrated my attention on two specific operations on matrixes:
 An evergreen topic in computer science are lists; here I have worked on some inplementations:
 
 - [Singly linked list](/src/main/java/com/github/nicolapiccolo/lists/singlyLinked/SinglyLinkedList.md)
+
+
+## Maps
+
+A fundamental data structure for key-value storage:
+
+- [Hash table](/src/main/java/com/github/nicolapiccolo/maps/hashtables/HashTable.md)

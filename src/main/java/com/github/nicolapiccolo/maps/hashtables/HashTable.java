@@ -43,67 +43,37 @@ public class HashTable<K, V> {
 	}
 	
 	public void put(K key, V value) {
-		if(key==null) {
-			throw new RuntimeException("Null key provided");
+		if(key == null) {
+			throw new IllegalArgumentException("Null key provided");
 		}
 		this.doPut(key, value);
-	}
-	
-	private void doPut(K key, V value) {
-		String keyToHash = key.toString();
-		int index = this.getIndexFrom(keyToHash);
-		this.insertIntoBucketArray(index, key, value);
 		this.resizeHashTableIfLoadFactorExceeded();
 	}
 	
-	private int getIndexFrom(String keyToHash) {
+	private void doPut(K key, V value) {
+		int index = this.getIndexFrom(key);
+		this.insertIntoBucketArray(index, key, value);
+	}
+	
+	private int getIndexFrom(K key) {
+		String keyToHash = key.toString();
 		int hash = this.hashCode.hashCodeOf(keyToHash);
 		return this.compressor.compress(hash, this.compressorParameters);
 	}
 	
 	private void insertIntoBucketArray(int index, K key, V value) {
 		if(this.bucketArray[index] == null) {
-			this.bucketArray[index] = new ArrayList<HashTableEntry<K, V>>(); 
+			this.bucketArray[index] = new ArrayList<>(); 
 		}
 		List<HashTableEntry<K, V>> bucket = this.bucketArray[index];
-		boolean hasDuplicates = this.hasDuplicates(key, bucket); 
-		if(hasDuplicates) {
-			this.replaceEntry(key, value, bucket);
-		} else {
-			this.insertEntry(key, value, bucket);
-		}
-		
-	}
-	
-	private boolean hasDuplicates(K key, List<HashTableEntry<K, V>> bucket) {
 		for(HashTableEntry<K, V> entry : bucket) {
-			if(entry.key.equals(key)) {
-				return true;
+			if(entry.key().equals(key)) {
+				entry.setValue(value);
+				return;
 			}
 		}
-		return false;
-	}
-	
-	private void replaceEntry(K key, V value, List<HashTableEntry<K, V>> bucket) {
-		for(HashTableEntry<K, V> entry : bucket) {
-			if(entry.key.equals(key)) {
-				entry.value = value;
-				break;
-			}
-		}		
-	}
-	
-	private void insertEntry(K key, V value, List<HashTableEntry<K, V>> bucket) {
-		HashTableEntry<K, V> entry = this.buildEntryWith(key, value);
-		bucket.add(entry);
+		bucket.add(new HashTableEntry<>(key, value));
 		this.entriesCount++;
-	}
-	
-	private HashTableEntry<K, V> buildEntryWith(K key, V value){
-		HashTableEntry<K, V> entry = new HashTableEntry<K, V>();
-		entry.key = key;
-		entry.value = value;
-		return entry;
 	}
 	
 	private void resizeHashTableIfLoadFactorExceeded() {
@@ -118,68 +88,61 @@ public class HashTable<K, V> {
 		for(List<HashTableEntry<K, V>> originalBucket : originalBucketArray) {
 			if(originalBucket != null) {
 				for(HashTableEntry<K, V> entry : originalBucket) {
-					this.put(entry.key, entry.value);
+					this.doPut(entry.key(), entry.value());
 				}				
 			}
 		}
 	}
 	
 	public V get(K key) {
-		if(key==null) {
-			throw new RuntimeException("Null key provided");
+		if(key == null) {
+			throw new IllegalArgumentException("Null key provided");
 		}
 		return this.doGet(key);
 	}
 	
 	private V doGet(K key) {
-		String keyToHash = key.toString();
-		int index = this.getIndexFrom(keyToHash);
-		V value = this.findEntryWith(index, key);
-		return value;
+		int index = this.getIndexFrom(key);
+		return this.findValueWith(index, key);
 	}
 	
-	private V findEntryWith(int index, K key) {
+	private V findValueWith(int index, K key) {
 		List<HashTableEntry<K, V>> bucket = this.bucketArray[index];
 		if(bucket == null) {
 			return null;
 		}
-		int entryIndexToReturn = this.findEntryWith(key, bucket);
-		if(entryIndexToReturn < 0) {
+		int entryIndex = this.findEntryIndexWith(key, bucket);
+		if(entryIndex < 0) {
 			return null;
 		}
-		HashTableEntry<K, V> entry = bucket.get(entryIndexToReturn);
-		return entry.value;
+		return bucket.get(entryIndex).value();
 	}
 	
-	private int findEntryWith(K key, List<HashTableEntry<K, V>> bucket) {
-		int matchingIndexToRemove = -1;
-		for(int entryIndex=0; entryIndex < bucket.size(); entryIndex++) {
-			HashTableEntry<K, V> entry = bucket.get(entryIndex);
-			if(entry.key.equals(key)) {
-				matchingIndexToRemove = entryIndex;
-				break;
+	private int findEntryIndexWith(K key, List<HashTableEntry<K, V>> bucket) {
+		for(int entryIndex = 0; entryIndex < bucket.size(); entryIndex++) {
+			if(bucket.get(entryIndex).key().equals(key)) {
+				return entryIndex;
 			}
 		}
-		return matchingIndexToRemove;
+		return -1;
 	}
 	
 	public void delete(K key) {
-		if(key==null) {
-			throw new RuntimeException("Null key provided");
+		if(key == null) {
+			throw new IllegalArgumentException("Null key provided");
 		}
 		this.doDelete(key);
 	}
 	
 	private void doDelete(K key) {
-		String keyToHash = key.toString();
-		int index = this.getIndexFrom(keyToHash);
+		int index = this.getIndexFrom(key);
 		this.deleteEntryWith(index, key);
 	}
 	
 	private void deleteEntryWith(int index, K key) {
 		List<HashTableEntry<K, V>> bucket = this.bucketArray[index];
 		if(bucket != null) {
-			int indexToRemove = this.findEntryWith(key, bucket);
+			int indexToRemove = this.findEntryIndexWith(key, bucket);
 			if(indexToRemove >= 0) {
 				bucket.remove(indexToRemove);
 				this.entriesCount--;

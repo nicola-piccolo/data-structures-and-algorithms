@@ -16,22 +16,17 @@ public class CompressorTest {
 	public void compress_zero_returnsOffset() {
 		Compressor compressor = new Compressor();
 		CompressorParametersDto dto = this.buildDto();
-		assertTrue(compressor.compress(0, dto) == dto.offset);
+		assertTrue(compressor.compress(0, dto) == dto.offset());
 	}
 	
 	private CompressorParametersDto buildDto() {
-		CompressorParametersDto dto = new CompressorParametersDto();
-		dto.multiplier = 3;
-		dto.offset = 7;
-		dto.modulo = 13;
-		dto.bucketArraySize = 10;
-		return dto;
+		return new CompressorParametersDto(3, 7, 13, 10);
 	}
 	
 	@Test
 	public void compress_one_returnsValue() {
 		Compressor compressor = new Compressor();
 		CompressorParametersDto dto = this.buildDto();
-		assertTrue(compressor.compress(1, dto) == ((dto.multiplier + dto.offset) % dto.modulo) % dto.bucketArraySize);
+		assertTrue(compressor.compress(1, dto) == ((dto.multiplier() + dto.offset()) % dto.modulo()) % dto.bucketArraySize());
 	}
 }

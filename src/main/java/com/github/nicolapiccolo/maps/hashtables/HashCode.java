@@ -6,7 +6,7 @@ public class HashCode {
 	
 	public int hashCodeOf(String stringToHash) {
 		if(stringToHash == null) {
-			throw new RuntimeException("Cannot hash a null string");
+			throw new IllegalArgumentException("Cannot hash a null string");
 		}
 		int hashCode = 0;
 		for(int index=0; index<stringToHash.length(); index++) {
