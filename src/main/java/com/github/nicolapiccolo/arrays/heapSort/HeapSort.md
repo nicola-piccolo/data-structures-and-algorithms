@@ -14,4 +14,4 @@ Since both phases iterate over all N elements and each operation costs O(log N),
 
 Unlike selection sort or insertion sort, this implementation is _not in place_ because it requires an auxiliary heap structure and a separate result array.
 
-Here follows the Java implementation of heap sort: [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/src/main/java/com/github/nicolapiccolo/arrays/heapSort/HeapSorter.java).
+Here follows the Java implementation of heap sort: [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/blob/dev/src/main/java/com/github/nicolapiccolo/arrays/heapSort/HeapSorter.java).

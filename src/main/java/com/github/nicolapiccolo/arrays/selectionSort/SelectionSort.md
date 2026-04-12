@@ -20,4 +20,4 @@ Selection sort is an _in place_ sorting algorithm too, because it does not requi
 
 Given an array of N items, selection sort has a time complexity of O(N<sup>2</sup>) because, if we are working with an array that is already sorted in descending order, then at each step we will need to scan the right side of the array until we reach its end and pick the last item.
 
-Here follows the Java implementation of selection sort: [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/src/main/java/com/github/nicolapiccolo/arrays/selectionSort/SelectionSorter.java).
+Here follows the Java implementation of selection sort: [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/blob/dev/src/main/java/com/github/nicolapiccolo/arrays/selectionSort/SelectionSorter.java).

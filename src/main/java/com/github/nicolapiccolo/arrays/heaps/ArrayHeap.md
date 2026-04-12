@@ -23,4 +23,4 @@ A new element is added as the last leaf of the tree. Then, it is compared with i
 
 The root is removed and replaced by the last leaf. Then, the new root is compared with its children and swapped downward (top-down restore) with the smallest child until the heap property is satisfied. This operation has a time complexity of O(log N).
 
-Here follows the Java implementation of an array-backed min-heap: [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/src/main/java/com/github/nicolapiccolo/arrays/heaps/ArrayHeap.java).
+Here follows the Java implementation of an array-backed min-heap: [Java implementation](https://github.com/nicola-piccolo/data-structures-and-algorithms/blob/dev/src/main/java/com/github/nicolapiccolo/arrays/heaps/ArrayHeap.java).
