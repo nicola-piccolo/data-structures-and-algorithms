@@ -55,3 +55,19 @@ A collection of tree-based data structures and algorithms:
 - [Binary search tree with AVL balancing](/src/main/java/com/github/nicolapiccolo/trees/binarysearch/BinarySearchTree.md)
 
 - [Tree-backed min-heap](/src/main/java/com/github/nicolapiccolo/trees/heaps/TreeHeap.md)
+
+
+## Stacks
+
+A classic LIFO data structure:
+
+- [Array-backed stack](/src/main/java/com/github/nicolapiccolo/stacks/Stack.md)
+
+
+## Queues
+
+A classic FIFO data structure:
+
+- [Circular array-backed queue](/src/main/java/com/github/nicolapiccolo/queues/Queue.md)
+
+- [Circular array-backed deque](/src/main/java/com/github/nicolapiccolo/queues/Deque.md)
