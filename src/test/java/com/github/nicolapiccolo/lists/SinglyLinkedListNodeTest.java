@@ -14,16 +14,16 @@ public class SinglyLinkedListNodeTest {
 	@Test
 	public void getValue() {
 		Integer value = 10;
-		SinglyLinkedListNode node = new SinglyLinkedListNode(value);
+		SinglyLinkedListNode<Integer> node = new SinglyLinkedListNode<>(value);
 		assertTrue(node.getValue() == value);
 	}
 
 	@Test
 	public void setNextNode() {
 		Integer value = 10;
-		SinglyLinkedListNode node = new SinglyLinkedListNode(value);
+		SinglyLinkedListNode<Integer> node = new SinglyLinkedListNode<>(value);
 		assertFalse(node.hasNextNode());
-		SinglyLinkedListNode nextNode = new SinglyLinkedListNode(value);
+		SinglyLinkedListNode<Integer> nextNode = new SinglyLinkedListNode<>(value);
 		node.setNextNode(nextNode);
 		assertTrue(node.hasNextNode());
 	}
@@ -31,8 +31,8 @@ public class SinglyLinkedListNodeTest {
 	@Test
 	public void resetNextNode() {
 		Integer value = 10;
-		SinglyLinkedListNode node = new SinglyLinkedListNode(value);
-		SinglyLinkedListNode nextNode = new SinglyLinkedListNode(value);
+		SinglyLinkedListNode<Integer> node = new SinglyLinkedListNode<>(value);
+		SinglyLinkedListNode<Integer> nextNode = new SinglyLinkedListNode<>(value);
 		node.setNextNode(nextNode);
 		assertTrue(node.hasNextNode());
 		node.resetNextNode();
@@ -42,19 +42,19 @@ public class SinglyLinkedListNodeTest {
 	@Test
 	public void getNextNode_noNextNode_returnsEmptyOptional() {
 		Integer value = 10;
-		SinglyLinkedListNode node = new SinglyLinkedListNode(value);
-		Optional<SinglyLinkedListNode> nextNode = node.getNextNode();
+		SinglyLinkedListNode<Integer> node = new SinglyLinkedListNode<>(value);
+		Optional<SinglyLinkedListNode<Integer>> nextNode = node.getNextNode();
 		assertTrue(nextNode.isEmpty());
 	}
 
 	@Test
 	public void getNextNode_hasNextNode_returnsNextNode() {
 		Integer value = 10;
-		SinglyLinkedListNode node = new SinglyLinkedListNode(value);
+		SinglyLinkedListNode<Integer> node = new SinglyLinkedListNode<>(value);
 		assertFalse(node.hasNextNode());
-		SinglyLinkedListNode nextNode = new SinglyLinkedListNode(value);
+		SinglyLinkedListNode<Integer> nextNode = new SinglyLinkedListNode<>(value);
 		node.setNextNode(nextNode);
-		Optional<SinglyLinkedListNode> result = node.getNextNode();
+		Optional<SinglyLinkedListNode<Integer>> result = node.getNextNode();
 		assertTrue(result.isPresent());
 		assertTrue(result.get() == nextNode);
 	}

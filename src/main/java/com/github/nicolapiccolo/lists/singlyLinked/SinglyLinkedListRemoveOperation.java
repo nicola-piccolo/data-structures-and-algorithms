@@ -2,29 +2,30 @@ package com.github.nicolapiccolo.lists.singlyLinked;
 
 import java.util.Optional;
 
-public class SinglyLinkedListRemoveOperation implements SinglyLinkedListOperation {
-	private Integer position;
-	private Optional<SinglyLinkedListNode> head;
-	private Optional<SinglyLinkedListNode> tail;
+public class SinglyLinkedListRemoveOperation<T> extends AbstractSinglyLinkedListOperation<T> {
+	private int position;
+	private Optional<SinglyLinkedListNode<T>> head;
+	private Optional<SinglyLinkedListNode<T>> tail;
 
-	public SinglyLinkedListRemoveOperation(Integer position, Optional<SinglyLinkedListNode> head,
-			Optional<SinglyLinkedListNode> tail) {
+	public SinglyLinkedListRemoveOperation(int position, Optional<SinglyLinkedListNode<T>> head,
+			Optional<SinglyLinkedListNode<T>> tail) {
 		this.position = position;
 		this.head = head;
 		this.tail = tail;
 	}
 
 	@Override
-	public void execute() {
+	public SinglyLinkedHeadAndTailDto<T> execute() {
 		if (this.isOneNodeList()) {
 			this.resetHeadAndTail();
 		} else {
 			this.doRemove();
 		}
+		return new SinglyLinkedHeadAndTailDto<>(this.head, this.tail);
 	}
 
 	private boolean isOneNodeList() {
-		return this.head.get() == this.tail.get();
+		return !this.head.get().hasNextNode();
 	}
 
 	private void resetHeadAndTail() {
@@ -37,7 +38,7 @@ public class SinglyLinkedListRemoveOperation implements SinglyLinkedListOperatio
 			this.moveHeadToTheRight();
 			return;
 		}
-		SinglyLinkedListNode nodeBeforePosition = this.findNodeBefore(this.position);
+		SinglyLinkedListNode<T> nodeBeforePosition = this.findNodeBefore(this.position, this.head);
 		if (this.shouldUpdateTail(nodeBeforePosition)) {
 			this.setAsNewTail(nodeBeforePosition);
 			return;
@@ -46,37 +47,23 @@ public class SinglyLinkedListRemoveOperation implements SinglyLinkedListOperatio
 	}
 
 	private void moveHeadToTheRight() {
-		SinglyLinkedListNode headNode = this.head.get();
+		SinglyLinkedListNode<T> headNode = this.head.get();
 		this.head = headNode.getNextNode();
 	}
 
-	private SinglyLinkedListNode findNodeBefore(Integer position) {
-		SinglyLinkedListNode nodeBeforePosition = this.head.get();
-		for (int index = 1; index < position; index++) {
-			Optional<SinglyLinkedListNode> nextNode = nodeBeforePosition.getNextNode();
-			nodeBeforePosition = nextNode.get();
-		}
-		return nodeBeforePosition;
-	}
-
-	private boolean shouldUpdateTail(SinglyLinkedListNode nodeBeforePosition) {
-		SinglyLinkedListNode nodeOnPosition = nodeBeforePosition.getNextNode().get();
+	private boolean shouldUpdateTail(SinglyLinkedListNode<T> nodeBeforePosition) {
+		SinglyLinkedListNode<T> nodeOnPosition = nodeBeforePosition.getNextNode().get();
 		return !nodeOnPosition.hasNextNode();
 	}
 
-	private void setAsNewTail(SinglyLinkedListNode newTailNode) {
+	private void setAsNewTail(SinglyLinkedListNode<T> newTailNode) {
 		newTailNode.resetNextNode();
 		this.tail = Optional.of(newTailNode);
 	}
 
-	private void removeNodeAfter(SinglyLinkedListNode nodeBeforePosition) {
-		SinglyLinkedListNode nodeOnPosition = nodeBeforePosition.getNextNode().get();
-		SinglyLinkedListNode nodeAfterPosition = nodeOnPosition.getNextNode().get();
+	private void removeNodeAfter(SinglyLinkedListNode<T> nodeBeforePosition) {
+		SinglyLinkedListNode<T> nodeOnPosition = nodeBeforePosition.getNextNode().get();
+		SinglyLinkedListNode<T> nodeAfterPosition = nodeOnPosition.getNextNode().get();
 		nodeBeforePosition.setNextNode(nodeAfterPosition);
-	}
-
-	@Override
-	public SinglyLinkedHeadAndTailDto getHeadAndTail() {
-		return new SinglyLinkedHeadAndTailDto(this.head, this.tail);
 	}
 }

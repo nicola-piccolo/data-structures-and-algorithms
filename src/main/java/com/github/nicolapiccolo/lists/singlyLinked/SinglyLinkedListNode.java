@@ -2,16 +2,16 @@ package com.github.nicolapiccolo.lists.singlyLinked;
 
 import java.util.Optional;
 
-public class SinglyLinkedListNode {
-	private Integer value;
-	private Optional<SinglyLinkedListNode> nextNode;
+public class SinglyLinkedListNode<T> {
+	private T value;
+	private Optional<SinglyLinkedListNode<T>> nextNode;
 
-	public SinglyLinkedListNode(Integer value) {
+	public SinglyLinkedListNode(T value) {
 		this.value = value;
 		this.resetNextNode();
 	}
 
-	public void setNextNode(SinglyLinkedListNode nextNode) {
+	public void setNextNode(SinglyLinkedListNode<T> nextNode) {
 		this.nextNode = Optional.of(nextNode);
 	}
 
@@ -23,11 +23,11 @@ public class SinglyLinkedListNode {
 		return this.nextNode.isPresent();
 	}
 
-	public Optional<SinglyLinkedListNode> getNextNode() {
+	public Optional<SinglyLinkedListNode<T>> getNextNode() {
 		return this.nextNode;
 	}
 
-	public Integer getValue() {
+	public T getValue() {
 		return this.value;
 	}
 }

@@ -3,10 +3,10 @@ package com.github.nicolapiccolo.lists.singlyLinked;
 import java.util.Iterator;
 import java.util.Optional;
 
-public class SinglyLinkedListIterator implements Iterator<Integer> {
-	private Optional<SinglyLinkedListNode> currentNode;
+public class SinglyLinkedListIterator<T> implements Iterator<T> {
+	private Optional<SinglyLinkedListNode<T>> currentNode;
 
-	public SinglyLinkedListIterator(Optional<SinglyLinkedListNode> head) {
+	public SinglyLinkedListIterator(Optional<SinglyLinkedListNode<T>> head) {
 		this.currentNode = head;
 	}
 
@@ -16,8 +16,8 @@ public class SinglyLinkedListIterator implements Iterator<Integer> {
 	}
 
 	@Override
-	public Integer next() {
-		SinglyLinkedListNode node = this.currentNode.get();
+	public T next() {
+		SinglyLinkedListNode<T> node = this.currentNode.get();
 		this.currentNode = node.getNextNode();
 		return node.getValue();
 	}

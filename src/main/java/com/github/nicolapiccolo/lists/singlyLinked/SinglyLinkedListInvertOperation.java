@@ -2,25 +2,25 @@ package com.github.nicolapiccolo.lists.singlyLinked;
 
 import java.util.Optional;
 
-public class SinglyLinkedListInvertOperation implements SinglyLinkedListOperation {
-	private Optional<SinglyLinkedListNode> head;
-	private Optional<SinglyLinkedListNode> tail;
+public class SinglyLinkedListInvertOperation<T> implements SinglyLinkedListOperation<T> {
+	private Optional<SinglyLinkedListNode<T>> head;
+	private Optional<SinglyLinkedListNode<T>> tail;
 
-	public SinglyLinkedListInvertOperation(Optional<SinglyLinkedListNode> head, Optional<SinglyLinkedListNode> tail) {
+	public SinglyLinkedListInvertOperation(Optional<SinglyLinkedListNode<T>> head, Optional<SinglyLinkedListNode<T>> tail) {
 		this.head = head;
 		this.tail = tail;
 	}
 
 	@Override
-	public void execute() {
-		if (this.isOneNodeList()) {
-			return;
+	public SinglyLinkedHeadAndTailDto<T> execute() {
+		if (!this.isOneNodeList()) {
+			this.doInvert();
 		}
-		this.doInvert();
+		return new SinglyLinkedHeadAndTailDto<>(this.head, this.tail);
 	}
 
 	private boolean isOneNodeList() {
-		return this.head.get() == this.tail.get();
+		return !this.head.get().hasNextNode();
 	}
 
 	private void doInvert() {
@@ -29,10 +29,10 @@ public class SinglyLinkedListInvertOperation implements SinglyLinkedListOperatio
 	}
 
 	private void invertLinks() {
-		SinglyLinkedListNode originalHeadNode = this.head.get();
-		Optional<SinglyLinkedListNode> currentNode = this.head;
-		Optional<SinglyLinkedListNode> nextNode = currentNode.get().getNextNode();
-		Optional<SinglyLinkedListNode> nodeAfterNext;
+		SinglyLinkedListNode<T> originalHeadNode = this.head.get();
+		Optional<SinglyLinkedListNode<T>> currentNode = this.head;
+		Optional<SinglyLinkedListNode<T>> nextNode = currentNode.get().getNextNode();
+		Optional<SinglyLinkedListNode<T>> nodeAfterNext;
 		while (nextNode.isPresent()) {
 			nodeAfterNext = nextNode.get().getNextNode();
 			nextNode.get().setNextNode(currentNode.get());
@@ -43,14 +43,9 @@ public class SinglyLinkedListInvertOperation implements SinglyLinkedListOperatio
 	}
 
 	private void swapHeadAndTail() {
-		SinglyLinkedListNode originalHeadNode = this.head.get();
-		SinglyLinkedListNode originalTailNode = this.tail.get();
+		SinglyLinkedListNode<T> originalHeadNode = this.head.get();
+		SinglyLinkedListNode<T> originalTailNode = this.tail.get();
 		this.head = Optional.of(originalTailNode);
 		this.tail = Optional.of(originalHeadNode);
-	}
-
-	@Override
-	public SinglyLinkedHeadAndTailDto getHeadAndTail() {
-		return new SinglyLinkedHeadAndTailDto(this.head, this.tail);
 	}
 }

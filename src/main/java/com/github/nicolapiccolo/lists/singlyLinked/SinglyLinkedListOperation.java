@@ -1,7 +1,5 @@
 package com.github.nicolapiccolo.lists.singlyLinked;
 
-public interface SinglyLinkedListOperation {
-	void execute();
-
-	SinglyLinkedHeadAndTailDto getHeadAndTail();
+public interface SinglyLinkedListOperation<T> {
+	SinglyLinkedHeadAndTailDto<T> execute();
 }

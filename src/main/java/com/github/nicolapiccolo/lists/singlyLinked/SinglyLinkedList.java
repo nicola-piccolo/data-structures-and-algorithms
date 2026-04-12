@@ -3,10 +3,10 @@ package com.github.nicolapiccolo.lists.singlyLinked;
 import java.util.Iterator;
 import java.util.Optional;
 
-public class SinglyLinkedList implements Iterable<Integer> {
-	private Optional<SinglyLinkedListNode> head;
-	private Optional<SinglyLinkedListNode> tail;
-	private Integer size;
+public class SinglyLinkedList<T> implements Iterable<T> {
+	private Optional<SinglyLinkedListNode<T>> head;
+	private Optional<SinglyLinkedListNode<T>> tail;
+	private int size;
 
 	public SinglyLinkedList() {
 		this.initializeList();
@@ -18,7 +18,7 @@ public class SinglyLinkedList implements Iterable<Integer> {
 		this.size = 0;
 	}
 
-	public Integer size() {
+	public int size() {
 		return this.size;
 	}
 
@@ -26,109 +26,90 @@ public class SinglyLinkedList implements Iterable<Integer> {
 		return this.size == 0;
 	}
 
-	public void addAsFirst(Integer value) {
-		Integer position = 0;
-		SinglyLinkedListOperation operation = this.buildAddOperation(position, value);
+	public void addAsFirst(T value) {
+		int position = 0;
+		SinglyLinkedListOperation<T> operation = this.buildAddOperation(position, value);
 		this.doAddOperation(operation);
 	}
 
-	private SinglyLinkedListOperation buildAddOperation(Integer position, Integer value) {
-		return new SinglyLinkedListAddOperation(position, value, this.head, this.tail);
+	private SinglyLinkedListOperation<T> buildAddOperation(int position, T value) {
+		return new SinglyLinkedListAddOperation<>(position, value, this.head, this.tail);
 	}
 
-	private void doAddOperation(SinglyLinkedListOperation operation) {
-		operation.execute();
-		this.incrementSize();
-		this.updateHeadAndTailWith(operation);
-	}
-
-	private void incrementSize() {
+	private void doAddOperation(SinglyLinkedListOperation<T> operation) {
+		this.updateHeadAndTailWith(operation.execute());
 		this.size++;
 	}
 
-	private void updateHeadAndTailWith(SinglyLinkedListOperation operation) {
-		SinglyLinkedHeadAndTailDto headAndTail = operation.getHeadAndTail();
+	private void updateHeadAndTailWith(SinglyLinkedHeadAndTailDto<T> headAndTail) {
 		this.head = headAndTail.head();
 		this.tail = headAndTail.tail();
 	}
 
-	public void addAsLast(Integer value) {
-		Integer position = this.size();
-		SinglyLinkedListOperation operation = this.buildAddOperation(position, value);
+	public void addAsLast(T value) {
+		int position = this.size();
+		SinglyLinkedListOperation<T> operation = this.buildAddOperation(position, value);
 		this.doAddOperation(operation);
 	}
 
-	public void addAt(Integer position, Integer value) {
+	public void addAt(int position, T value) {
 		if (position < 0) {
-			throw new RuntimeException("Negative positions are not allowed!");
+			throw new IllegalArgumentException("Negative positions are not allowed!");
 		}
 		if (position > this.size()) {
-			throw new RuntimeException("Position is out of bound!");
+			throw new IllegalArgumentException("Position is out of bound!");
 		}
-		SinglyLinkedListOperation operation = this.buildAddOperation(position, value);
+		SinglyLinkedListOperation<T> operation = this.buildAddOperation(position, value);
 		this.doAddOperation(operation);
 	}
 
-	public Iterator<Integer> iterator() {
-		return new SinglyLinkedListIterator(this.head);
+	public Iterator<T> iterator() {
+		return new SinglyLinkedListIterator<>(this.head);
 	}
 
-	public Integer first() {
-		if (this.isEmpty()) {
-			throw new RuntimeException("Empty list!");
-		}
-		SinglyLinkedListNode first = this.head.get();
-		return first.getValue();
+	public T first() {
+		return this.head.orElseThrow(() -> new IllegalStateException("Empty list!")).getValue();
 	}
 
-	public Integer last() {
-		if (this.isEmpty()) {
-			throw new RuntimeException("Empty list!");
-		}
-		SinglyLinkedListNode last = this.tail.get();
-		return last.getValue();
+	public T last() {
+		return this.tail.orElseThrow(() -> new IllegalStateException("Empty list!")).getValue();
 	}
 
 	public void removeFirst() {
 		if (this.isEmpty()) {
-			throw new RuntimeException("Empty list!");
+			throw new IllegalStateException("Empty list!");
 		}
-		Integer position = 0;
-		SinglyLinkedListOperation operation = this.buildRemoveOperation(position);
+		int position = 0;
+		SinglyLinkedListOperation<T> operation = this.buildRemoveOperation(position);
 		this.doRemoveOperation(operation);
 	}
 
-	private SinglyLinkedListOperation buildRemoveOperation(Integer position) {
-		return new SinglyLinkedListRemoveOperation(position, this.head, this.tail);
+	private SinglyLinkedListOperation<T> buildRemoveOperation(int position) {
+		return new SinglyLinkedListRemoveOperation<>(position, this.head, this.tail);
 	}
 
-	private void doRemoveOperation(SinglyLinkedListOperation operation) {
-		operation.execute();
-		this.decrementSize();
-		this.updateHeadAndTailWith(operation);
-	}
-
-	private void decrementSize() {
+	private void doRemoveOperation(SinglyLinkedListOperation<T> operation) {
+		this.updateHeadAndTailWith(operation.execute());
 		this.size--;
 	}
 
 	public void removeLast() {
 		if (this.isEmpty()) {
-			throw new RuntimeException("Empty list!");
+			throw new IllegalStateException("Empty list!");
 		}
-		Integer position = this.size() - 1;
-		SinglyLinkedListOperation operation = this.buildRemoveOperation(position);
+		int position = this.size() - 1;
+		SinglyLinkedListOperation<T> operation = this.buildRemoveOperation(position);
 		this.doRemoveOperation(operation);
 	}
 
-	public void removeFrom(Integer position) {
+	public void removeFrom(int position) {
 		if (position < 0) {
-			throw new RuntimeException("Negative positions are not allowed!");
+			throw new IllegalArgumentException("Negative positions are not allowed!");
 		}
 		if (position >= this.size()) {
-			throw new RuntimeException("Position is out of bound!");
+			throw new IllegalArgumentException("Position is out of bound!");
 		}
-		SinglyLinkedListOperation operation = this.buildRemoveOperation(position);
+		SinglyLinkedListOperation<T> operation = this.buildRemoveOperation(position);
 		this.doRemoveOperation(operation);
 	}
 
@@ -136,13 +117,12 @@ public class SinglyLinkedList implements Iterable<Integer> {
 		if (this.isEmpty()) {
 			return;
 		}
-		SinglyLinkedListOperation operation = this.buildInvertOperation();
-		operation.execute();
-		this.updateHeadAndTailWith(operation);
+		SinglyLinkedListOperation<T> operation = this.buildInvertOperation();
+		this.updateHeadAndTailWith(operation.execute());
 	}
 
-	private SinglyLinkedListOperation buildInvertOperation() {
-		return new SinglyLinkedListInvertOperation(this.head, this.tail);
+	private SinglyLinkedListOperation<T> buildInvertOperation() {
+		return new SinglyLinkedListInvertOperation<>(this.head, this.tail);
 	}
 
 }
